@@ -226,3 +226,93 @@ func ExclusiveTime(n int, logs []string) []int {
 	}
 	return result
 }
+
+// ============================================================================
+// Monotonic Stack
+// ============================================================================
+
+// Final Prices With a Special Discount in a Shop
+// Patrón: Monotonic Stack
+// Útil cuando:
+//   - se busca el próximo menor/mayor elemento
+//   - evitar comparaciones redundantes en peor caso
+//   - garantizar O(n) en lugar de O(n²)
+func FinalPrices(prices []int) []int {
+	n := len(prices)
+	res := make([]int, n)
+	copy(res, prices)
+	stack := make([]int, 0)
+	for currentProd := range n {
+		for len(stack) > 0 && prices[currentProd] <= prices[stack[len(stack)-1]] {
+			prevProd := stack[len(stack)-1]
+			res[prevProd] = prices[prevProd] - prices[currentProd]
+			stack = stack[:len(stack)-1]
+		}
+		stack = append(stack, currentProd)
+	}
+	return res
+}
+
+// Daily Temperatures
+// Patrón: Monotonic Stack (Decreasing)
+// Útil cuando:
+//   - se busca próximo mayor elemento
+//   - calcular distancia hasta ese elemento
+//   - garantizar O(n)
+func DailyTemperatures(temperatures []int) []int {
+	n := len(temperatures)
+	answer := make([]int, n)
+	stack := make([]int, 0)
+	for i := range n {
+		for len(stack) > 0 && temperatures[i] > temperatures[stack[len(stack)-1]] {
+			idx := stack[len(stack)-1]
+			answer[idx] = i - idx
+			stack = stack[:len(stack)-1]
+		}
+		stack = append(stack, i)
+	}
+	return answer
+}
+
+// Largest Rectangle in Histogram
+// Patrón: Monotonic Stack (Increasing)
+// Útil cuando:
+//  - se calcula área/ancho máximo con restricción de altura
+//  - se necesita encontrar límites izquierdo y derecho para cada elemento
+//  - garantizar O(n)
+func LargestRectangleArea(heights []int) int {
+	maxArea := 0
+	stack := make([]int, 0)
+	for i, currentHeight := range heights {
+		for len(stack) > 0 && currentHeight < heights[stack[len(stack)-1]] {
+			height := heights[stack[len(stack)-1]]
+			stack = stack[:len(stack)-1]
+			var width int
+			if len(stack) < 1 {
+				width = i
+			} else {
+				width = i - stack[len(stack)-1] - 1
+			}
+			area := height * width
+			if area > maxArea {
+				maxArea = area
+			}
+		}
+		stack = append(stack, i)
+	}
+	for len(stack) > 0 {
+		height := heights[stack[len(stack)-1]]
+		stack = stack[:len(stack)-1]
+		var width int
+		if len(stack) == 0 {
+			width = len(heights)
+		} else {
+			width = len(heights) - stack[len(stack)-1] - 1
+		}
+		area := height * width
+		if area > maxArea {
+			maxArea = area
+		}
+	}
+	return maxArea
+}
