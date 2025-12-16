@@ -316,3 +316,70 @@ func LargestRectangleArea(heights []int) int {
 	}
 	return maxArea
 }
+
+// Plus One
+// Patrón: Digit-by-Digit Arithmetic (Simulation)
+// Útil cuando:
+//  - se simulan operaciones aritméticas manuales (suma, resta, multiplicación)
+//  - se procesan dígitos de derecha a izquierda con propagación de acarreo
+//  - se trabaja con números representados como arrays/strings/linked lists
+func PlusOne(digits []int) []int {
+	n := len(digits)
+	if digits[n-1] != 9 {
+		digits[n-1]++
+		return digits
+	}
+	carry := false
+	for i := n-1; i >= 0; i-- {
+		if digits[i] == 9 {
+			digits[i] = 0
+			carry = true
+		} else {
+			if carry {
+				digits[i]++
+				carry = false
+				break
+			}
+		}
+	}
+	if carry {
+		digits[0] = 1
+		digits = append(digits, 0)
+	}
+	return digits
+}
+
+// Valid Mountain Array
+// Patrón: Single Pass + State Machine (Fase de subida → Fase de bajada)
+// Útil cuando:
+//  - se verifica una secuencia que cambia de dirección una sola vez
+//  - se necesita detectar transiciones entre estados (subir/bajar)
+//  - se valida monotonía con un punto de inflexión
+func ValidMountainArray(arr []int) bool {
+	n := len(arr)
+	if n < 3 {
+		return false
+	}
+	down := false
+	amount := 0
+	for i := 1; i < n; i++ {
+		idx := i - 1
+		if arr[i] == arr[idx] {
+			return false
+		} else if arr[i] > arr[idx] {
+			if down {
+				return false
+			}
+			amount++
+		} else {
+			down = true
+			if amount < 1 {
+				return false
+			}
+		}
+	}
+	if !down {
+		return false
+	}
+	return true
+}
