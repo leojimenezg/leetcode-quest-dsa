@@ -317,6 +317,10 @@ func LargestRectangleArea(heights []int) int {
 	return maxArea
 }
 
+// ============================================================================
+// Assignment 1
+// ============================================================================
+
 // Plus One
 // Patrón: Digit-by-Digit Arithmetic (Simulation)
 // Útil cuando:
@@ -382,4 +386,38 @@ func ValidMountainArray(arr []int) bool {
 		return false
 	}
 	return true
+}
+
+// ============================================================================
+// Assignment 2
+// ============================================================================
+
+// Remove Duplicate Letters
+// Patrón: Greedy + Monotonic Stack (Increasing)
+// Útil cuando:
+//  - se construye una secuencia lexicográficamente óptima
+//  - se pueden "deshacer" decisiones si aparece algo mejor después
+//  - se necesita eliminar duplicados manteniendo orden relativo
+func RemoveDuplicateLetters(s string) string {
+	lastIndex := make(map[rune]int)
+	for i, l := range s {
+		lastIndex[l] = i
+	}
+	used := make(map[rune]bool)
+	stack := make([]rune, 0)
+	for idx, lt := range s {
+		if used[lt] {
+			continue
+		}
+		for len(stack) > 0 &&
+		lt < stack[len(stack)-1] &&
+		lastIndex[stack[len(stack)-1]] > idx {
+			stackTop := stack[len(stack)-1]
+			stack = stack[:len(stack)-1]
+			used[stackTop] = false
+		}
+		stack = append(stack, lt)
+		used[lt] = true
+	}
+	return string(stack)
 }
