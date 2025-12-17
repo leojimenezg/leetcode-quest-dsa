@@ -421,3 +421,23 @@ func RemoveDuplicateLetters(s string) string {
 	}
 	return string(stack)
 }
+
+// Two Sum
+// Patrón: Hash Table
+// Útil cuando:
+//  - se busca un par de elementos con relación matemática (suma, diferencia, producto)
+//  - se necesita acceso O(1) a elementos por valor
+//  - el orden relativo no importa
+func TwoSum(nums []int, target int) []int {
+    numbers := make(map[int]int)
+    for i, v := range nums {
+        numbers[v] = i
+    }
+    for idx, num := range nums {
+        diff := target - num
+        if i, ok := numbers[diff]; ok && i != idx {
+            return []int{idx, i}
+        }
+    }
+    return []int{}
+}
