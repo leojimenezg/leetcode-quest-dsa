@@ -277,9 +277,9 @@ func DailyTemperatures(temperatures []int) []int {
 // Largest Rectangle in Histogram
 // Patrón: Monotonic Stack (Increasing)
 // Útil cuando:
-//  - se calcula área/ancho máximo con restricción de altura
-//  - se necesita encontrar límites izquierdo y derecho para cada elemento
-//  - garantizar O(n)
+//   - se calcula área/ancho máximo con restricción de altura
+//   - se necesita encontrar límites izquierdo y derecho para cada elemento
+//   - garantizar O(n)
 func LargestRectangleArea(heights []int) int {
 	maxArea := 0
 	stack := make([]int, 0)
@@ -324,9 +324,9 @@ func LargestRectangleArea(heights []int) int {
 // Plus One
 // Patrón: Digit-by-Digit Arithmetic (Simulation)
 // Útil cuando:
-//  - se simulan operaciones aritméticas manuales (suma, resta, multiplicación)
-//  - se procesan dígitos de derecha a izquierda con propagación de acarreo
-//  - se trabaja con números representados como arrays/strings/linked lists
+//   - se simulan operaciones aritméticas manuales (suma, resta, multiplicación)
+//   - se procesan dígitos de derecha a izquierda con propagación de acarreo
+//   - se trabaja con números representados como arrays/strings/linked lists
 func PlusOne(digits []int) []int {
 	n := len(digits)
 	if digits[n-1] != 9 {
@@ -334,7 +334,7 @@ func PlusOne(digits []int) []int {
 		return digits
 	}
 	carry := false
-	for i := n-1; i >= 0; i-- {
+	for i := n - 1; i >= 0; i-- {
 		if digits[i] == 9 {
 			digits[i] = 0
 			carry = true
@@ -356,9 +356,9 @@ func PlusOne(digits []int) []int {
 // Valid Mountain Array
 // Patrón: Single Pass + State Machine (Fase de subida → Fase de bajada)
 // Útil cuando:
-//  - se verifica una secuencia que cambia de dirección una sola vez
-//  - se necesita detectar transiciones entre estados (subir/bajar)
-//  - se valida monotonía con un punto de inflexión
+//   - se verifica una secuencia que cambia de dirección una sola vez
+//   - se necesita detectar transiciones entre estados (subir/bajar)
+//   - se valida monotonía con un punto de inflexión
 func ValidMountainArray(arr []int) bool {
 	n := len(arr)
 	if n < 3 {
@@ -395,9 +395,9 @@ func ValidMountainArray(arr []int) bool {
 // Remove Duplicate Letters
 // Patrón: Greedy + Monotonic Stack (Increasing)
 // Útil cuando:
-//  - se construye una secuencia lexicográficamente óptima
-//  - se pueden "deshacer" decisiones si aparece algo mejor después
-//  - se necesita eliminar duplicados manteniendo orden relativo
+//   - se construye una secuencia lexicográficamente óptima
+//   - se pueden "deshacer" decisiones si aparece algo mejor después
+//   - se necesita eliminar duplicados manteniendo orden relativo
 func RemoveDuplicateLetters(s string) string {
 	lastIndex := make(map[rune]int)
 	for i, l := range s {
@@ -410,8 +410,8 @@ func RemoveDuplicateLetters(s string) string {
 			continue
 		}
 		for len(stack) > 0 &&
-		lt < stack[len(stack)-1] &&
-		lastIndex[stack[len(stack)-1]] > idx {
+			lt < stack[len(stack)-1] &&
+			lastIndex[stack[len(stack)-1]] > idx {
 			stackTop := stack[len(stack)-1]
 			stack = stack[:len(stack)-1]
 			used[stackTop] = false
@@ -425,19 +425,19 @@ func RemoveDuplicateLetters(s string) string {
 // Two Sum
 // Patrón: Hash Table
 // Útil cuando:
-//  - se busca un par de elementos con relación matemática (suma, diferencia, producto)
-//  - se necesita acceso O(1) a elementos por valor
-//  - el orden relativo no importa
+//   - se busca un par de elementos con relación matemática (suma, diferencia, producto)
+//   - se necesita acceso O(1) a elementos por valor
+//   - el orden relativo no importa
 func TwoSum(nums []int, target int) []int {
-    numbers := make(map[int]int)
-    for i, v := range nums {
-        numbers[v] = i
-    }
-    for idx, num := range nums {
-        diff := target - num
-        if i, ok := numbers[diff]; ok && i != idx {
-            return []int{idx, i}
-        }
-    }
-    return []int{}
+	numbers := make(map[int]int)
+	for i, v := range nums {
+		numbers[v] = i
+	}
+	for idx, num := range nums {
+		diff := target - num
+		if i, ok := numbers[diff]; ok && i != idx {
+			return []int{idx, i}
+		}
+	}
+	return []int{}
 }
