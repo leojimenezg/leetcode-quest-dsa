@@ -422,6 +422,10 @@ func RemoveDuplicateLetters(s string) string {
 	return string(stack)
 }
 
+// ============================================================================
+// Why not?
+// ============================================================================
+
 // Two Sum
 // Patrón: Hash Table
 // Útil cuando:
@@ -440,4 +444,107 @@ func TwoSum(nums []int, target int) []int {
 		}
 	}
 	return []int{}
+}
+
+// ============================================================================
+// Queue
+// ============================================================================
+
+// Number of Students Unable to Eat Lunch
+// Patrón: Counting + Sequential Matching
+// Útil cuando:
+//   - elementos pueden reordenarse libremente (rotación infinita)
+//   - solo importa disponibilidad total, no orden específico
+//   - hay procesamiento secuencial estricto del otro lado
+func CountStudents(students []int, sandwiches []int) int {
+	countEach := [2]int{}
+	for _, sandwichType := range students {
+		countEach[sandwichType]++
+	}
+	for _, sandwichType := range sandwiches {
+		if countEach[sandwichType] > 0 {
+			countEach[sandwichType]--
+		} else {
+			break
+		}
+	}
+	return countEach[0] + countEach[1]
+}
+
+// Time Needed to Buy Tickets
+// Patrón: Mathematical Simulation (cálculo directo sin simular paso a paso)
+// Útil cuando:
+//   - se simula un proceso circular pero se puede calcular el resultado directamente
+//   - hay un punto de terminación específico (persona k termina)
+//   - personas antes/después del punto tienen comportamientos diferentes
+func TimeRequiredToBuy(tickets []int, k int) int {
+	totalTime := 0
+	for i := range tickets {
+		if i < k {
+			totalTime += min(tickets[i], tickets[k])
+		} else if i == k {
+			totalTime += tickets[i]
+		} else {
+			totalTime += min(tickets[i], tickets[k]-1)
+		}
+	}
+	return totalTime
+}
+
+// Implement Queue using Stacks
+// Patrón: Two-Stack Queue (lazy transfer)
+// Útil cuando:
+//   - se necesita implementar Queue (FIFO) usando solo Stacks (LIFO)
+//   - se quiere amortizar el costo de inversión de orden
+//   - las operaciones Pop/Peek son menos frecuentes que Push
+type MyQueue struct {
+	StackInput  []int
+	StackOutput []int
+	Size        int
+}
+
+func Constructor() MyQueue {
+	return MyQueue{
+		StackInput:  make([]int, 0),
+		StackOutput: make([]int, 0),
+		Size:        0,
+	}
+}
+
+func (this *MyQueue) Push(x int) {
+	this.StackInput = append(this.StackInput, x)
+	this.Size++
+}
+
+func (this *MyQueue) Pop() int {
+	if len(this.StackOutput) < 1 {
+		this.revealBottom()
+	}
+	first := this.StackOutput[len(this.StackOutput)-1]
+	this.StackOutput = this.StackOutput[:len(this.StackOutput)-1]
+	this.Size--
+	return first
+}
+
+func (this *MyQueue) Peek() int {
+	if len(this.StackOutput) < 1 {
+		this.revealBottom()
+	}
+	return this.StackOutput[len(this.StackOutput)-1]
+}
+
+func (this *MyQueue) Empty() bool {
+	return this.Size == 0
+}
+
+// revealBottom transfiere todos los elementos de un stack a otro
+// Esto invierte el orden: el más antiguo queda en top del stack
+// También conocido como "lazy transfer" en el patrón Two-Stack Queue
+func (this *MyQueue) revealBottom() {
+	for len(this.StackInput) > 0 {
+		this.StackOutput = append(
+			this.StackOutput, this.StackInput[len(this.StackInput)-1],
+		)
+		this.StackInput = this.StackInput[:len(this.StackInput)-1]
+	}
 }
