@@ -5,6 +5,7 @@
 package problems
 
 import (
+	"container/heap"
 	"sort"
 	"strconv"
 	"strings"
@@ -547,4 +548,51 @@ func (this *MyQueue) revealBottom() {
 		)
 		this.StackInput = this.StackInput[:len(this.StackInput)-1]
 	}
+}
+
+// ============================================================================
+// Heap
+// ============================================================================
+
+// MaxHeap implementa heap.Interface para un max heap de enteros
+type MaxHeap []int
+
+func (h MaxHeap) Len() int {
+	return len(h)
+}
+
+func (h MaxHeap) Less(i, j int) bool { return h[i] > h[j] }
+
+func (h MaxHeap) Swap(i, j int) { h[i], h[j] = h[j], h[i] }
+
+func (h *MaxHeap) Push(x any) { *h = append(*h, x.(int)) }
+
+func (h *MaxHeap) Pop() any {
+	old := *h
+	n := len(old)
+	x := old[n-1]
+	*h = old[0 : n-1]
+	return x
+}
+
+// Last Stone Weight
+// Patrón: Max Heap (Priority Queue)
+// Útil cuando:
+//   - se necesita acceso repetido al elemento máximo (o mínimo)
+//   - se agregan/remueven elementos dinámicamente
+//   - mantener orden completo es innecesario (solo importa el extremo)
+func LastStoneWeight(stones []int) int {
+	h := MaxHeap(stones)
+	heap.Init(&h)
+	for h.Len() > 1 {
+		y := heap.Pop(&h).(int)
+		x := heap.Pop(&h).(int)
+		if x != y {
+			heap.Push(&h, y-x)
+		}
+	}
+	if h.Len() > 0 {
+		return h[0]
+	}
+	return 0
 }
