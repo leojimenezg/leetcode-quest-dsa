@@ -596,3 +596,62 @@ func LastStoneWeight(stones []int) int {
 	}
 	return 0
 }
+
+type Pair struct {
+	I   int
+	J   int
+	Sum int
+}
+
+type MinHeapPairs []Pair
+
+func (h MinHeapPairs) Len() int {
+	return len(h)
+}
+
+func (h MinHeapPairs) Less(i, j int) bool { return h[i].Sum < h[j].Sum }
+
+func (h MinHeapPairs) Swap(i, j int) { h[i], h[j] = h[j], h[i] }
+
+func (h *MinHeapPairs) Push(x any) { *h = append(*h, x.(Pair)) }
+
+func (h *MinHeapPairs) Pop() any {
+	old := *h
+	n := len(old)
+	x := old[n-1]
+	*h = old[0 : n-1]
+	return x
+}
+
+type PairKey struct {
+	I int
+	J int
+}
+
+// Find K Pairs with Smallest Sums
+// Patrón: Min Heap + BFS-like expansion (exploración bajo demanda)
+// Útil cuando:
+//  - se buscan k elementos óptimos de una matriz virtual (n × m combinaciones)
+//  - ambos arrays están ordenados (permite exploración inteligente)
+//  - complejidad: O(k log k) tiempo, O(k) espacio
+func KSmallestPairs(nums1 []int, nums2 []int, k int) [][]int {
+	res := make([][]int, 0, k)
+	visited := make(map[PairKey]bool)
+	minHeap := MinHeapPairs{}
+	heap.Init(&minHeap)
+	heap.Push(&minHeap, Pair{0, 0, nums1[0] + nums2[0]})
+	visited[PairKey{0, 0}] = true
+	for len(res) < k {
+		pair := heap.Pop(&minHeap).(Pair)
+		res = append(res, []int{nums1[pair.I], nums2[pair.J]})
+		if j := pair.J + 1; j < len(nums2) && !visited[PairKey{pair.I, j}] {
+			heap.Push(&minHeap, Pair{pair.I, j, nums1[pair.I] + nums2[j]})
+			visited[PairKey{pair.I, j}] = true
+		}
+		if i := pair.I + 1; i < len(nums1) && !visited[PairKey{i, pair.J}] {
+			heap.Push(&minHeap, Pair{i, pair.J, nums1[i] + nums2[pair.J]})
+			visited[PairKey{i, pair.J}] = true
+		}
+	}
+	return res
+}
