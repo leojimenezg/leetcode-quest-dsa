@@ -631,9 +631,9 @@ type PairKey struct {
 // Find K Pairs with Smallest Sums
 // Patrón: Min Heap + BFS-like expansion (exploración bajo demanda)
 // Útil cuando:
-//  - se buscan k elementos óptimos de una matriz virtual (n × m combinaciones)
-//  - ambos arrays están ordenados (permite exploración inteligente)
-//  - complejidad: O(k log k) tiempo, O(k) espacio
+//   - se buscan k elementos óptimos de una matriz virtual (n × m combinaciones)
+//   - ambos arrays están ordenados (permite exploración inteligente)
+//   - complejidad: O(k log k) tiempo, O(k) espacio
 func KSmallestPairs(nums1 []int, nums2 []int, k int) [][]int {
 	res := make([][]int, 0, k)
 	visited := make(map[PairKey]bool)
@@ -654,4 +654,36 @@ func KSmallestPairs(nums1 []int, nums2 []int, k int) [][]int {
 		}
 	}
 	return res
+}
+
+// Construct Target Array With Multiple Sums
+// Patrón: Reverse Greedy + Max Heap + Compresión por módulo
+// Idea central:
+//   - el último elemento modificado siempre es el máximo actual
+//   - en lugar de construir el arreglo desde [1,1,...], se revierte target hasta llegar a ese estado
+//   - el máximo pudo haberse formado por múltiples sumas consecutivas del resto
+//   - el módulo permite deshacer todas esas sumas en una sola iteración
+func isPossible(target []int) bool {
+	maxHeap := MaxHeap(target)
+	heap.Init(&maxHeap)
+	currentSum := 0
+	for _, v := range target {
+		currentSum += v
+	}
+	for {
+		currentMax := heap.Pop(&maxHeap).(int)
+		if currentMax == 1 {
+			return true
+		}
+		othersSum := currentSum - currentMax
+		if othersSum <= 0 || othersSum >= currentMax {
+			return false
+		}
+		prevNum := currentMax % othersSum
+		if prevNum == 0 && othersSum != 1 {
+			return false
+		}
+		heap.Push(&maxHeap, prevNum)
+		currentSum = othersSum + prevNum
+	}
 }
