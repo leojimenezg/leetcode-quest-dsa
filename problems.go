@@ -16,10 +16,17 @@ import (
 // ============================================================================
 
 // Concatenation of Array
-// Patrón: Array construction/building
+// Patrones:
+//   - Array Construction
+//
 // Útil cuando:
-//   - se requiere un nuevo array
-//   - el tamaño del nuevo array es predecible
+//   - se necesita crear un nuevo arreglo a partir de uno existente
+//   - el tamaño final es conocido de antemano
+//   - no se requiere lógica condicional compleja
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(n)
 func GetConcatenation(nums []int) []int {
 	n := len(nums)
 	ans := make([]int, n*2)
@@ -31,10 +38,17 @@ func GetConcatenation(nums []int) []int {
 }
 
 // Shuffle the Array
-// Patrón: Array Construction + Interleaving (intercalado)
+// Patrones:
+//   - Array Construction
+//   - Interleaving
+//
 // Útil cuando:
-//   - se necesita mezclar/intercalar dos secuencias
-//   - el tamaño resultante es predecible
+//   - se combinan dos secuencias con posiciones conocidas
+//   - se requiere acceso indexado directo
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(n)
 func Shuffle(nums []int, n int) []int {
 	ans := make([]int, 2*n)
 	for i := range n {
@@ -45,11 +59,17 @@ func Shuffle(nums []int, n int) []int {
 }
 
 // Max Consecutive Ones
-// Patrón: Sliding Window + Running Maximum
+// Patrones:
+//   - Single Pass
+//   - Running Counter
+//
 // Útil cuando:
-//   - se necesita encontrar la secuencia consecutiva más larga
-//   - se debe resetear un contador cuando se rompe una condición
-//   - se mantiene track del mejor resultado visto hasta ahora
+//   - se busca la subsecuencia consecutiva más larga
+//   - una condición rompe el conteo y obliga a reiniciar
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(1)
 func FindMaxConsecutiveOnes(nums []int) int {
 	currentCount := 0
 	lastMaxCount := 0
@@ -69,11 +89,17 @@ func FindMaxConsecutiveOnes(nums []int) int {
 // ============================================================================
 
 // Set Mismatch
-// Patrón: Hash Table + Math Formula
+// Patrones:
+//   - Hash Table
+//   - Mathematical Invariants
+//
 // Útil cuando:
-//   - se necesita detectar duplicados en O(n)
-//   - se pueden usar fórmulas matemáticas para encontrar valores faltantes
-//   - espacio extra O(n) es aceptable
+//   - se detectan duplicados y valores faltantes
+//   - se conoce el rango esperado de valores
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(n)
 func FindErrorNums(nums []int) []int {
 	n := len(nums)
 	expectedSum := n * (n + 1) / 2
@@ -92,11 +118,17 @@ func FindErrorNums(nums []int) []int {
 }
 
 // How Many Numbers Are Smaller Than the Current Number
-// Patrón: Sorting + Hash Table
+// Patrones:
+//   - Sorting
+//   - Value Compression
+//
 // Útil cuando:
-//   - se necesita comparar cada elemento con todos los demás
-//   - se puede sacrificar posiciones originales temporalmente
-//   - O(n log n) es aceptable vs O(n²)
+//   - se necesita ranking relativo
+//   - O(n log n) es aceptable
+//
+// Complejidad:
+//   - Tiempo: O(n log n)
+//   - Espacio: O(n)
 func SmallerNumbersThanCurrent(nums []int) []int {
 	n := len(nums)
 	sorted := make([]int, n)
@@ -115,11 +147,17 @@ func SmallerNumbersThanCurrent(nums []int) []int {
 }
 
 // Find All Numbers Disappeared in an Array
-// Patrón: Index as Hash + Array Construction
+// Patrones:
+//   - Index as Hash
+//   - Presence Tracking
+//
 // Útil cuando:
-//   - rango de valores conocido (1 a n)
-//   - se necesita rastrear presencia/ausencia
-//   - O(n) tiempo y espacio es aceptable
+//   - el rango de valores es conocido (1...n)
+//   - se puede usar el índice como estructura auxiliar
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(n)
 func FindDisappearedNumbers(nums []int) []int {
 	n := len(nums)
 	nonRepeated := make([]bool, n)
@@ -140,11 +178,18 @@ func FindDisappearedNumbers(nums []int) []int {
 // ============================================================================
 
 // Build an Array With Stack Operations
-// Patrón: Simulation + Two Pointers
+// Patrones:
+//   - Simulation
+//   - Two Pointers
+//
 // Útil cuando:
-//   - se simula un proceso paso a paso
-//   - se necesita sincronizar dos secuencias ordenadas
-//   - los punteros avanzan con lógica relacionada
+//   - se simula un proceso paso a paso con reglas fijas
+//   - se sincronizan dos secuencias crecientes
+//   - un puntero avanza condicionado al otro
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(n)
 func BuildArray(target []int, n int) []string {
 	idx := 0
 	ops := make([]string, 0)
@@ -163,11 +208,17 @@ func BuildArray(target []int, n int) []string {
 }
 
 // Evaluate Reverse Polish Notation
-// Patrón: Stack (LIFO)
+// Patrones:
+//   - Stack (LIFO)
+//
 // Útil cuando:
-//   - evaluación de expresiones postfix/prefix
-//   - se necesita procesar elementos en orden inverso al ingreso
-//   - operaciones dependen de los últimos N elementos
+//   - se evalúan expresiones postfix/prefix
+//   - las operaciones dependen de los últimos operandos ingresados
+//   - se requiere deshacer consumo parcial de datos
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(n)
 func EvalRPN(tokens []string) int {
 	stack := make([]int, 0)
 	for _, token := range tokens {
@@ -197,11 +248,18 @@ func EvalRPN(tokens []string) int {
 }
 
 // Exclusive Time of Functions
-// Patrón: Stack (LIFO) + Time Tracking
+// Patrones:
+//   - Stack (Call Stack Simulation)
+//   - Interval / Time Tracking
+//
 // Útil cuando:
-//   - se modela call stack de funciones anidadas
-//   - se necesita calcular tiempos exclusivos con pausas/resumes
-//   - operaciones tienen inicio y fin que deben balancearse
+//   - se modela ejecución anidada de procesos o funciones
+//   - hay eventos start/end bien definidos
+//   - se requiere excluir tiempo de ejecuciones hijas
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(n)
 func ExclusiveTime(n int, logs []string) []int {
 	result := make([]int, n)
 	stack := make([]int, 0)
@@ -233,11 +291,17 @@ func ExclusiveTime(n int, logs []string) []int {
 // ============================================================================
 
 // Final Prices With a Special Discount in a Shop
-// Patrón: Monotonic Stack
+// Patrones:
+//   - Monotonic Stack (Increasing)
+//
 // Útil cuando:
-//   - se busca el próximo menor/mayor elemento
-//   - evitar comparaciones redundantes en peor caso
-//   - garantizar O(n) en lugar de O(n²)
+//   - se busca el siguiente elemento menor o igual
+//   - se quieren evitar comparaciones redundantes
+//   - se necesita resolver en O(n) en lugar de O(n²)
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(n)
 func FinalPrices(prices []int) []int {
 	n := len(prices)
 	res := make([]int, n)
@@ -255,11 +319,16 @@ func FinalPrices(prices []int) []int {
 }
 
 // Daily Temperatures
-// Patrón: Monotonic Stack (Decreasing)
+// Patrones:
+//   - Monotonic Stack (decreciente)
+//
 // Útil cuando:
-//   - se busca próximo mayor elemento
-//   - calcular distancia hasta ese elemento
-//   - garantizar O(n)
+//   - se busca el siguiente elemento mayor
+//   - se requiere distancia entre índices
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(n)
 func DailyTemperatures(temperatures []int) []int {
 	n := len(temperatures)
 	answer := make([]int, n)
@@ -276,11 +345,17 @@ func DailyTemperatures(temperatures []int) []int {
 }
 
 // Largest Rectangle in Histogram
-// Patrón: Monotonic Stack (Increasing)
+// Patrones:
+//   - Monotonic Stack (Increasing)
+//
 // Útil cuando:
-//   - se calcula área/ancho máximo con restricción de altura
-//   - se necesita encontrar límites izquierdo y derecho para cada elemento
-//   - garantizar O(n)
+//   - se necesita calcular áreas máximas bajo restricciones locales
+//   - se buscan límites izquierdo y derecho para cada elemento
+//   - una decisión depende del primer elemento menor a ambos lados
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(n)
 func LargestRectangleArea(heights []int) int {
 	maxArea := 0
 	stack := make([]int, 0)
@@ -323,11 +398,18 @@ func LargestRectangleArea(heights []int) int {
 // ============================================================================
 
 // Plus One
-// Patrón: Digit-by-Digit Arithmetic (Simulation)
+// Patrones:
+//   - Digit-by-Digit Arithmetic
+//   - Simulation
+//
 // Útil cuando:
-//   - se simulan operaciones aritméticas manuales (suma, resta, multiplicación)
-//   - se procesan dígitos de derecha a izquierda con propagación de acarreo
-//   - se trabaja con números representados como arrays/strings/linked lists
+//   - se simulan operaciones aritméticas manuales
+//   - hay propagación de acarreo
+//   - los números están representados como arrays o strings
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(1)
 func PlusOne(digits []int) []int {
 	n := len(digits)
 	if digits[n-1] != 9 {
@@ -355,11 +437,18 @@ func PlusOne(digits []int) []int {
 }
 
 // Valid Mountain Array
-// Patrón: Single Pass + State Machine (Fase de subida → Fase de bajada)
+// Patrones:
+//   - Single Pass
+//   - State Machine
+//
 // Útil cuando:
-//   - se verifica una secuencia que cambia de dirección una sola vez
-//   - se necesita detectar transiciones entre estados (subir/bajar)
-//   - se valida monotonía con un punto de inflexión
+//   - una secuencia cambia de dirección solo una vez
+//   - se validan transiciones entre estados (subida → bajada)
+//   - se requiere detectar un único punto de inflexión
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(1)
 func ValidMountainArray(arr []int) bool {
 	n := len(arr)
 	if n < 3 {
@@ -394,11 +483,17 @@ func ValidMountainArray(arr []int) bool {
 // ============================================================================
 
 // Remove Duplicate Letters
-// Patrón: Greedy + Monotonic Stack (Increasing)
+// Patrones:
+//   - Greedy
+//   - Monotonic Stack (increasing)
+//
 // Útil cuando:
-//   - se construye una secuencia lexicográficamente óptima
-//   - se pueden "deshacer" decisiones si aparece algo mejor después
-//   - se necesita eliminar duplicados manteniendo orden relativo
+//   - se construye una secuencia lexicográficamente mínima
+//   - se permiten rollback de decisiones previas
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(n)
 func RemoveDuplicateLetters(s string) string {
 	lastIndex := make(map[rune]int)
 	for i, l := range s {
@@ -428,11 +523,18 @@ func RemoveDuplicateLetters(s string) string {
 // ============================================================================
 
 // Two Sum
-// Patrón: Hash Table
+// Patrones:
+//   - Hash Table
+//   - Complement Lookup
+//
 // Útil cuando:
-//   - se busca un par de elementos con relación matemática (suma, diferencia, producto)
-//   - se necesita acceso O(1) a elementos por valor
-//   - el orden relativo no importa
+//   - se busca un par con relación matemática fija
+//   - se requiere acceso O(1) por valor
+//   - el orden de los elementos no es relevante
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(n)
 func TwoSum(nums []int, target int) []int {
 	numbers := make(map[int]int)
 	for i, v := range nums {
@@ -452,11 +554,18 @@ func TwoSum(nums []int, target int) []int {
 // ============================================================================
 
 // Number of Students Unable to Eat Lunch
-// Patrón: Counting + Sequential Matching
+// Patrones:
+//   - Counting
+//   - Greedy Consumption
+//
 // Útil cuando:
-//   - elementos pueden reordenarse libremente (rotación infinita)
-//   - solo importa disponibilidad total, no orden específico
-//   - hay procesamiento secuencial estricto del otro lado
+//   - el orden puede rotarse indefinidamente
+//   - solo importa la disponibilidad total
+//   - el consumo ocurre de forma secuencial y estricta
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(1)
 func CountStudents(students []int, sandwiches []int) int {
 	countEach := [2]int{}
 	for _, sandwichType := range students {
@@ -473,11 +582,17 @@ func CountStudents(students []int, sandwiches []int) int {
 }
 
 // Time Needed to Buy Tickets
-// Patrón: Mathematical Simulation (cálculo directo sin simular paso a paso)
+// Patrones:
+//   - Mathematical Simulation
+//
 // Útil cuando:
-//   - se simula un proceso circular pero se puede calcular el resultado directamente
-//   - hay un punto de terminación específico (persona k termina)
-//   - personas antes/después del punto tienen comportamientos diferentes
+//   - un proceso repetitivo puede expresarse como suma directa
+//   - hay un punto de terminación específico
+//   - los elementos antes y después del punto se comportan distinto
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(1)
 func TimeRequiredToBuy(tickets []int, k int) int {
 	totalTime := 0
 	for i := range tickets {
@@ -493,11 +608,17 @@ func TimeRequiredToBuy(tickets []int, k int) int {
 }
 
 // Implement Queue using Stacks
-// Patrón: Two-Stack Queue (lazy transfer)
+// Patrones:
+//   - Two-Stack Queue
+//   - Amortized Analysis
+//
 // Útil cuando:
-//   - se necesita implementar Queue (FIFO) usando solo Stacks (LIFO)
-//   - se quiere amortizar el costo de inversión de orden
-//   - las operaciones Pop/Peek son menos frecuentes que Push
+//   - solo se permiten stacks
+//   - se puede amortizar el costo de inversión
+//
+// Complejidad:
+//   - Tiempo: O(1) amortizado
+//   - Espacio: O(n)
 type MyQueue struct {
 	StackInput  []int
 	StackOutput []int
@@ -576,11 +697,18 @@ func (h *MaxHeap) Pop() any {
 }
 
 // Last Stone Weight
-// Patrón: Max Heap (Priority Queue)
+// Patrones:
+//   - Max Heap
+//   - Priority Queue
+//
 // Útil cuando:
-//   - se necesita acceso repetido al elemento máximo (o mínimo)
-//   - se agregan/remueven elementos dinámicamente
-//   - mantener orden completo es innecesario (solo importa el extremo)
+//   - se necesita acceder repetidamente al mayor elemento
+//   - el conjunto cambia dinámicamente
+//   - mantener orden total no es necesario
+//
+// Complejidad:
+//   - Tiempo: O(n log n)
+//   - Espacio: O(n)
 func LastStoneWeight(stones []int) int {
 	h := MaxHeap(stones)
 	heap.Init(&h)
@@ -629,11 +757,17 @@ type PairKey struct {
 }
 
 // Find K Pairs with Smallest Sums
-// Patrón: Min Heap + BFS-like expansion (exploración bajo demanda)
+// Patrones:
+//   - Min Heap
+//   - BFS-like Expansion
+//
 // Útil cuando:
-//   - se buscan k elementos óptimos de una matriz virtual (n × m combinaciones)
-//   - ambos arrays están ordenados (permite exploración inteligente)
-//   - complejidad: O(k log k) tiempo, O(k) espacio
+//   - se explora una matriz virtual ordenada
+//   - solo se necesitan los k mejores resultados
+//
+// Complejidad:
+//   - Tiempo: O(k log k)
+//   - Espacio: O(k)
 func KSmallestPairs(nums1 []int, nums2 []int, k int) [][]int {
 	res := make([][]int, 0, k)
 	visited := make(map[PairKey]bool)
@@ -657,13 +791,20 @@ func KSmallestPairs(nums1 []int, nums2 []int, k int) [][]int {
 }
 
 // Construct Target Array With Multiple Sums
-// Patrón: Reverse Greedy + Max Heap + Compresión por módulo
-// Idea central:
-//   - el último elemento modificado siempre es el máximo actual
-//   - en lugar de construir el arreglo desde [1,1,...], se revierte target hasta llegar a ese estado
-//   - el máximo pudo haberse formado por múltiples sumas consecutivas del resto
-//   - el módulo permite deshacer todas esas sumas en una sola iteración
-func isPossible(target []int) bool {
+// Patrones:
+//   - Reverse Greedy
+//   - Max Heap
+//   - Mathematical Reduction (modulo)
+//
+// Útil cuando:
+//   - un solo elemento domina el estado final
+//   - la simulación directa no escala
+//   - el proceso puede revertirse de forma determinista
+//
+// Complejidad:
+//   - Tiempo: O(n log n)
+//   - Espacio: O(n)
+func IsPossible(target []int) bool {
 	maxHeap := MaxHeap(target)
 	heap.Init(&maxHeap)
 	currentSum := 0
