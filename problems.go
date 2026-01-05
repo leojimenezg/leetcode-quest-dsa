@@ -828,3 +828,71 @@ func IsPossible(target []int) bool {
 		currentSum = othersSum + prevNum
 	}
 }
+
+// ============================================================================
+// String
+// ============================================================================
+
+// Detect Capital
+// Patrones:
+//   - String Validation
+//   - Case Analysis
+//
+// Útil cuando:
+//   - se valida el formato de una cadena según reglas explícitas
+//   - existen pocos estados válidos y son mutuamente excluyentes
+//   - la claridad es más importante que la optimización prematura
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(n) por creación de strings auxiliares
+func DetectCapitalUse(word string) bool {
+	allLower := strings.ToLower(word)
+	if allLower == word {
+		return true
+	}
+	allUpper := strings.ToUpper(word)
+	if allUpper == word {
+		return true
+	}
+	onlyFirst := strings.ToUpper(word[:1]) + strings.ToLower(word[1:])
+	if onlyFirst == word {
+		return true
+	}
+	return false
+}
+
+// License Key Formatting
+// Patrones:
+//   - String Normalization
+//   - Reverse Traversal
+//   - Fixed-size Grouping
+//   - Post-processing (Reverse Output)
+//
+// Útil cuando:
+//   - la entrada necesita limpieza previa (eliminar caracteres, unificar formato)
+//   - el agrupamiento depende del final de la secuencia
+//   - procesar desde adelante introduce casos especiales innecesarios
+//   - es más simple construir el resultado en orden inverso y corregir al final
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(n)
+func LicenseKeyFormatting(s string, k int) string {
+	s = strings.ReplaceAll(s, "-", "")
+	s = strings.ToUpper(s)
+	count := 0
+	var res []byte
+	for i := len(s) - 1; i >= 0; i-- {
+		if count == k {
+			res = append(res, '-')
+			count = 0
+		}
+		res = append(res, s[i])
+		count++
+	}
+	for i, j := 0, len(res)-1; i < j; i, j = i+1, j-1 {
+		res[i], res[j] = res[j], res[i]
+	}
+	return string(res)
+}
