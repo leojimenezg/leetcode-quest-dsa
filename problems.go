@@ -896,3 +896,48 @@ func LicenseKeyFormatting(s string, k int) string {
 	}
 	return string(res)
 }
+
+// Masking Personal Information
+// Patrones:
+//   - Case Analysis
+//   - Input Normalization (Structure Cleaning)
+//   - String Validation
+//   - String Masking / Redaction
+//
+// Útil cuando:
+//   - la entrada puede representar distintos tipos de datos
+//   - cada tipo requiere reglas de formato distintas
+//   - es necesario limpiar símbolos irrelevantes antes de procesar
+//   - se debe ocultar información sensible manteniendo partes visibles
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(n)
+func MaskPII(s string) string {
+	symbolIdx := strings.Index(s, "@")
+	var res strings.Builder
+	if symbolIdx < 0 {
+		s = strings.ReplaceAll(s, "+", "")
+		s = strings.ReplaceAll(s, "-", "")
+		s = strings.ReplaceAll(s, "(", "")
+		s = strings.ReplaceAll(s, ")", "")
+		s = strings.ReplaceAll(s, " ", "")
+		n := len(s)
+		res.WriteString("***-***-" + s[n-4:])
+		if diff := n - 10; diff > 0 {
+			var code strings.Builder
+			code.WriteRune('+')
+			for range diff {
+				code.WriteRune('*')
+			}
+			code.WriteRune('-')
+			code.WriteString(res.String())
+			return code.String()
+		}
+		return res.String()
+	} else {
+		s = strings.ToLower(s)
+		res.WriteString(s[:1] + "*****" + s[symbolIdx-1:])
+		return res.String()
+	}
+}
