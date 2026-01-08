@@ -1003,3 +1003,35 @@ func RotateString(s string, goal string) bool {
 	ss := s + s
 	return strings.Contains(ss, goal)
 }
+
+// Repeated String Match
+// Patrones:
+//   - String Repetition (Bounded)
+//   - Substring Search
+//   - Ceiling Division (Minimum Blocks to Cover a Length)
+//
+// Útil cuando:
+//   - un string base puede repetirse un número arbitrario de veces
+//   - se necesita verificar si otro string aparece como substring
+//   - el problema permite acotar matemáticamente el número de repeticiones
+//   - el caso difícil ocurre cuando el match cruza fronteras entre repeticiones
+//   - simular repeticiones infinitas es innecesario o incorrecto
+//
+// Complejidad:
+//   - Tiempo: O(n * m) en el peor caso
+//   - Espacio: O(n) por la construcción del string repetido
+func RepeatedStringMatch(a string, b string) int {
+	minReps := (len(b) + len(a) - 1) / len(a)
+	var reps strings.Builder
+	for range minReps {
+		reps.WriteString(a)
+	}
+	if strings.Contains(reps.String(), b) {
+		return minReps
+	}
+	reps.WriteString(a)
+	if strings.Contains(reps.String(), b) {
+		return minReps + 1
+	}
+	return -1
+}
