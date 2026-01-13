@@ -1035,3 +1035,74 @@ func RepeatedStringMatch(a string, b string) int {
 	}
 	return -1
 }
+
+// ============================================================================
+// Assignment 3
+// ============================================================================
+
+type Apple struct {
+	ExpireDay int
+	Count     int
+}
+
+type MinHeapApple []Apple
+
+func (h MinHeapApple) Len() int { return len(h) }
+
+func (h MinHeapApple) Less(i, j int) bool { return h[i].ExpireDay < h[j].ExpireDay }
+
+func (h MinHeapApple) Swap(i, j int) { h[i], h[j] = h[j], h[i] }
+
+func (h *MinHeapApple) Push(x any) { *h = append(*h, x.(Apple)) }
+
+func (h *MinHeapApple) Pop() any {
+	old := *h
+	n := len(old)
+	x := old[n-1]
+	*h = old[0 : n-1]
+	return x
+}
+
+// Maximum Number of Eaten Apples
+// Patrones:
+//   - MinHeap / Priority Queue
+//   - Greedy
+//
+// Útil cuando:
+//   - siempre conviene consumir primero el recurso con menor deadline
+//   - el input es finito pero el consumo puede extenderse más allá
+//   - es necesario mantener dinámicamente el “más urgente”
+//
+// Complejidad:
+//   - Tiempo: O(n log n), cada lote entra y sale del heap una vez
+//   - Espacio: O(n) por los lotes activos en el heap
+func EatenApples(apples []int, days []int) int {
+	n := len(apples)
+	res := 0
+	minHeap := MinHeapApple{}
+	heap.Init(&minHeap)
+	idx := 0
+	for idx < n || minHeap.Len() > 0 {
+		if idx < n && apples[idx] > 0 {
+			ed := idx + days[idx]
+			heap.Push(&minHeap, Apple{ExpireDay: ed, Count: apples[idx]})
+		}
+		for minHeap.Len() > 0 {
+			top := minHeap[0]
+			if top.ExpireDay > idx {
+				break
+			}
+			heap.Pop(&minHeap)
+		}
+		if minHeap.Len() > 0 {
+			res++
+			latest := heap.Pop(&minHeap).(Apple)
+			latest.Count--
+			if latest.Count > 0 {
+				heap.Push(&minHeap, latest)
+			}
+		}
+		idx++
+	}
+	return res
+}
