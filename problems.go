@@ -1106,3 +1106,72 @@ func EatenApples(apples []int, days []int) int {
 	}
 	return res
 }
+
+// Design Circular Queue
+// Patrones:
+//   - Circular Queue
+//   - Modular Indexing
+//   - Array-based Data Structure
+//
+// Útil cuando:
+//   - se necesita una queue FIFO con capacidad fija
+//   - se requiere O(1) para enqueue y dequeue
+//   - el espacio debe reutilizarse de forma controlada
+//   - es necesario mantener índices dentro de un rango circular fijo
+//
+// Complejidad:
+//   - Tiempo: O(1) por operación
+//   - Espacio: O(k), donde k es la capacidad fija de la queue
+type MyCircularQueue struct {
+	Items []int
+	IdxF  int
+	IdxR  int
+	Size  int
+	Cap   int
+}
+
+func Constructor(k int) MyCircularQueue {
+	return MyCircularQueue{Items: make([]int, k), Cap: k}
+}
+
+func (this *MyCircularQueue) EnQueue(value int) bool {
+	if this.Size == this.Cap {
+		return false
+	}
+	this.Items[this.IdxR] = value
+	this.IdxR = (this.IdxR + 1) % this.Cap
+	this.Size++
+	return true
+}
+
+func (this *MyCircularQueue) DeQueue() bool {
+	if this.Size == 0 {
+		return false
+	}
+	this.IdxF = (this.IdxF + 1) % this.Cap
+	this.Size--
+	return true
+}
+
+func (this *MyCircularQueue) Front() int {
+	if this.Size == 0 {
+		return -1
+	}
+	return this.Items[this.IdxF]
+}
+
+func (this *MyCircularQueue) Rear() int {
+	if this.Size == 0 {
+		return -1
+	}
+	idx := (this.IdxR - 1 + this.Cap) % this.Cap
+	return this.Items[idx]
+}
+
+func (this *MyCircularQueue) IsEmpty() bool {
+	return this.Size == 0
+}
+
+func (this *MyCircularQueue) IsFull() bool {
+	return this.Size == this.Cap
+}
