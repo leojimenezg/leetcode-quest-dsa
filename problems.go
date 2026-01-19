@@ -1258,3 +1258,45 @@ func MaxRepeating(sequence string, word string) int {
 	}
 	return k
 }
+
+// ============================================================================
+// Linked List
+// ============================================================================
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+// Remove Duplicates from Sorted List
+// Patrones:
+//   - Single-Pass Traversal
+//   - In-place Deduplication
+//   - Sorted Input Invariant
+//
+// Útil cuando:
+//   - los duplicados son contiguos (ordenada)
+//   - se permite modificar la estructura original
+//   - se requiere O(1) espacio extra
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(1)
+func deleteDuplicates(head *ListNode) *ListNode {
+	var prevNode *ListNode
+	currentNode := head
+	for currentNode != nil {
+		if prevNode == nil {
+			prevNode = currentNode
+			goto next
+		}
+		if currentNode.Val == prevNode.Val {
+			prevNode.Next = currentNode.Next
+		} else {
+			prevNode = currentNode
+		}
+	next:
+		currentNode = currentNode.Next
+	}
+	return head
+}
