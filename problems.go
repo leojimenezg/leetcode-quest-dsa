@@ -1300,3 +1300,36 @@ func deleteDuplicates(head *ListNode) *ListNode {
 	}
 	return head
 }
+
+// Odd Even Linked List
+//
+// Patrones:
+//   - Single-Pass Traversal
+//   - In-place List Partitioning
+//   - Pointer Rewiring
+//
+// Útil cuando:
+//   - se requiere reagrupar nodos según su posición (odd / even)
+//   - la estructura solo permite avanzar en una dirección (listas enlazadas)
+//   - no se puede regresar, reiniciar o usar accesos aleatorios
+//   - no se permite usar memoria extra proporcional a n
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(1)
+func OddEvenList(head *ListNode) *ListNode {
+	if head == nil {
+		return nil
+	}
+	oddCurrent := head
+	evenHead := head.Next
+	evenCurrent := evenHead
+	for evenCurrent != nil && evenCurrent.Next != nil {
+		oddCurrent.Next = evenCurrent.Next
+		oddCurrent = oddCurrent.Next
+		evenCurrent.Next = oddCurrent.Next
+		evenCurrent = evenCurrent.Next
+	}
+	oddCurrent.Next = evenHead
+	return head
+}
