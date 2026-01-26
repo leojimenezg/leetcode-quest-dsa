@@ -1333,3 +1333,33 @@ func OddEvenList(head *ListNode) *ListNode {
 	oddCurrent.Next = evenHead
 	return head
 }
+
+// Reverse Linked List
+//
+// Patrones:
+//   - Single-Pass Traversal
+//   - Pointer Reversal (Rewiring)
+//   - In-place Transformation
+//
+// Útil cuando:
+//   - se requiere invertir una lista enlazada
+//   - la estructura solo permite avanzar en una dirección
+//   - no se permite usar memoria extra proporcional a n
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(1)
+func ReverseList(head *ListNode) *ListNode {
+	current := head
+	var prev *ListNode
+	for current != nil {
+		next := current.Next
+		current.Next = prev
+		if next == nil {
+			head = current
+		}
+		prev = current
+		current = next
+	}
+	return head
+}
