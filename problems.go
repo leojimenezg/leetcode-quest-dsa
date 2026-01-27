@@ -6,6 +6,8 @@ package problems
 
 import (
 	"container/heap"
+	"math"
+	"slices"
 	"sort"
 	"strconv"
 	"strings"
@@ -516,37 +518,6 @@ func RemoveDuplicateLetters(s string) string {
 		used[lt] = true
 	}
 	return string(stack)
-}
-
-// ============================================================================
-// Why not?
-// ============================================================================
-
-// Two Sum
-// Patrones:
-//   - Hash Table
-//   - Complement Lookup
-//
-// Útil cuando:
-//   - se busca un par con relación matemática fija
-//   - se requiere acceso O(1) por valor
-//   - el orden de los elementos no es relevante
-//
-// Complejidad:
-//   - Tiempo: O(n)
-//   - Espacio: O(n)
-func TwoSum(nums []int, target int) []int {
-	numbers := make(map[int]int)
-	for i, v := range nums {
-		numbers[v] = i
-	}
-	for idx, num := range nums {
-		diff := target - num
-		if i, ok := numbers[diff]; ok && i != idx {
-			return []int{idx, i}
-		}
-	}
-	return []int{}
 }
 
 // ============================================================================
@@ -1362,4 +1333,118 @@ func ReverseList(head *ListNode) *ListNode {
 		current = next
 	}
 	return head
+}
+
+// ============================================================================
+// Hash
+// ============================================================================
+
+// Two Sum
+// Patrones:
+//   - Hash Table
+//   - Complement Lookup
+//
+// Útil cuando:
+//   - se busca un par con relación matemática fija
+//   - se requiere acceso O(1) por valor
+//   - el orden de los elementos no es relevante
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(n)
+func TwoSum(nums []int, target int) []int {
+	numbers := make(map[int]int)
+	for i, v := range nums {
+		numbers[v] = i
+	}
+	for idx, num := range nums {
+		diff := target - num
+		if i, ok := numbers[diff]; ok && i != idx {
+			return []int{idx, i}
+		}
+	}
+	return []int{}
+}
+
+type Node struct {
+	Val    int
+	Next   *Node
+	Random *Node
+}
+
+// Copy List with Random Pointer
+//
+// Patrones:
+//   - Hash Table
+//   - Two-Pass Traversal
+//   - Deep Copy
+//
+// Útil cuando:
+//   - se requiere clonar una estructura enlazada con referencias arbitrarias
+//   - existen punteros que no siguen una relación lineal
+//   - es necesario mantener una correspondencia 1-a-1 entre nodos originales y copiados
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(n)
+func CopyRandomList(head *Node) *Node {
+	if head == nil {
+		return nil
+	}
+	nodes := make(map[*Node]*Node) // Original: Copy
+	for current := head; current != nil; current = current.Next {
+		nodes[current] = &Node{Val: current.Val}
+	}
+	for original := head; original != nil; original = original.Next {
+		cpy := nodes[original]
+		cpy.Next = nodes[original.Next]
+		cpy.Random = nodes[original.Random]
+	}
+	return nodes[head]
+}
+
+func abs(x int) int {
+	if x < 0 {
+		return -x
+	}
+	return x
+}
+
+// First Missing Positive
+//
+// Patrones:
+//   - Index as Hash
+//   - In-place Transformation
+//   - Multi-Pass Traversal
+//
+// Útil cuando:
+//   - se trabaja con un array no ordenado
+//   - el rango de valores relevantes está acotado por la longitud del array
+//   - se requiere detectar presencia / ausencia de elementos
+//   - el problema exige explícitamente espacio extra O(1)
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(1)
+func firstMissingPositive(nums []int) int {
+	n := len(nums)
+	for i := range nums {
+		if nums[i] <= 0 || nums[i] > n {
+			nums[i] = n + 1
+		}
+	}
+	for i := range nums {
+		v := abs(nums[i])
+		if v <= n {
+			if nums[v-1] > 0 {
+				nums[v-1] = -nums[v-1]
+			}
+		}
+	}
+	for i := range nums {
+		if nums[i] > 0 {
+			return i + 1
+		}
+	}
+	return n + 1
 }
