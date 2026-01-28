@@ -6,8 +6,6 @@ package problems
 
 import (
 	"container/heap"
-	"math"
-	"slices"
 	"sort"
 	"strconv"
 	"strings"
@@ -1447,4 +1445,82 @@ func firstMissingPositive(nums []int) int {
 		}
 	}
 	return n + 1
+}
+
+// ============================================================================
+// Prefix Sum
+// ============================================================================
+
+// Find the Highest Altitude
+//
+// Patrones:
+//   - Prefix Sum (optimizado)
+//   - Running Maximum
+//   - Single Pass Traversal
+//
+// Útil cuando:
+//   - se calculan sumas acumuladas progresivamente
+//   - solo importa el valor máximo/mínimo de las sumas (no todas)
+//   - se puede procesar en una sola pasada sin almacenar histórico
+//   - se busca optimizar espacio evitando arrays auxiliares
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(1)
+func LargestAltitude(gain []int) int {
+	prev := 0
+	res := prev
+	for i := 0; i < len(gain); i++ {
+		prev = prev + gain[i]
+		if prev > res {
+			res = prev
+		}
+	}
+	return res
+}
+
+// Make Sum Divisible by P
+//
+// Patrones:
+//   - Prefix Sum (con Módulo)
+//   - Hash Table (Complement Lookup)
+//   - Mathematical Reduction (propiedades del módulo)
+//
+// Útil cuando:
+//   - se busca un subarray cuya suma cumple una condición de módulo
+//   - se necesita encontrar el subarray más corto que satisface la condición
+//   - se puede reformular como búsqueda de prefix sums previos
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(n)
+func minSubarray(nums []int, p int) int {
+	total := 0
+	for _, v := range nums {
+		total += v
+	}
+	remainder := total % p
+	if remainder == 0 {
+		return 0
+	}
+	mods := make(map[int]int)
+	mods[0] = -1
+	sum := 0
+	res := len(nums)
+	for i, v := range nums {
+		sum += v
+		currentMod := sum % p
+		targetMod := (currentMod - remainder + p) % p
+		if idx, ok := mods[targetMod]; ok {
+			length := i - idx
+			if length < res {
+				res = length
+			}
+		}
+		mods[currentMod] = i
+	}
+	if res >= len(nums) {
+		return -1
+	}
+	return res
 }
