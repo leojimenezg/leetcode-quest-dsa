@@ -1524,3 +1524,50 @@ func minSubarray(nums []int, p int) int {
 	}
 	return res
 }
+
+// Ways to Make a Fair Array
+//
+// Patrones:
+//   - Prefix Sum (bidireccional)
+//   - Running Totals
+//   - Position Swap Analysis
+//
+// Útil cuando:
+//   - remover un elemento afecta las posiciones de elementos posteriores
+//   - se necesita evaluar todas las posiciones sin simulación O(n²)
+//   - los elementos se dividen en dos categorías (par/impar, positivo/negativo)
+//   - se puede precalcular totales y ajustarlos dinámicamente
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(1)
+func WaysToMakeFair(nums []int) int {
+	totalEven, totalOdd := 0, 0
+	for i, v := range nums {
+		if i%2 == 0 {
+			totalEven += v
+		} else {
+			totalOdd += v
+		}
+	}
+	count := 0
+	leftEven, leftOdd := 0, 0
+	for i, v := range nums {
+		if i%2 == 0 {
+			totalEven -= v
+		} else {
+			totalOdd -= v
+		}
+		newEven := leftEven + totalOdd
+		newOdd := leftOdd + totalEven
+		if newEven == newOdd {
+			count++
+		}
+		if i%2 == 0 {
+			leftEven += v
+		} else {
+			leftOdd += v
+		}
+	}
+	return count
+}
