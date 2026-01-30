@@ -6,7 +6,6 @@ package problems
 
 import (
 	"container/heap"
-	"fmt"
 	"sort"
 	"strconv"
 	"strings"
