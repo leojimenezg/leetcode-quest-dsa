@@ -1251,7 +1251,7 @@ type ListNode struct {
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(1)
-func deleteDuplicates(head *ListNode) *ListNode {
+func DeleteDuplicates(head *ListNode) *ListNode {
 	var prevNode *ListNode
 	currentNode := head
 	for currentNode != nil {
@@ -1424,7 +1424,7 @@ func abs(x int) int {
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(1)
-func firstMissingPositive(nums []int) int {
+func FirstMissingPositive(nums []int) int {
 	n := len(nums)
 	for i := range nums {
 		if nums[i] <= 0 || nums[i] > n {
@@ -1494,7 +1494,7 @@ func LargestAltitude(gain []int) int {
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(n)
-func minSubarray(nums []int, p int) int {
+func MinSubarray(nums []int, p int) int {
 	total := 0
 	for _, v := range nums {
 		total += v
