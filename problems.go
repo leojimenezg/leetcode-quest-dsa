@@ -12,79 +12,6 @@ import (
 )
 
 // ============================================================================
-// Array 1
-// ============================================================================
-
-// Concatenation of Array
-// Patrones:
-//   - Array Construction
-//
-// Útil cuando:
-//   - se necesita crear un nuevo arreglo a partir de uno existente
-//   - el tamaño final es conocido de antemano
-//   - no se requiere lógica condicional compleja
-//
-// Complejidad:
-//   - Tiempo: O(n)
-//   - Espacio: O(n)
-func GetConcatenation(nums []int) []int {
-	n := len(nums)
-	ans := make([]int, n*2)
-	for i, v := range nums {
-		ans[i] = v
-		ans[i+n] = v
-	}
-	return ans
-}
-
-// Shuffle the Array
-// Patrones:
-//   - Array Construction
-//   - Interleaving
-//
-// Útil cuando:
-//   - se combinan dos secuencias con posiciones conocidas
-//   - se requiere acceso indexado directo
-//
-// Complejidad:
-//   - Tiempo: O(n)
-//   - Espacio: O(n)
-func Shuffle(nums []int, n int) []int {
-	ans := make([]int, 2*n)
-	for i := range n {
-		ans[2*i] = nums[i]
-		ans[2*i+1] = nums[i+n]
-	}
-	return ans
-}
-
-// Max Consecutive Ones
-// Patrones:
-//   - Single Pass
-//   - Running Counter
-//
-// Útil cuando:
-//   - se busca la subsecuencia consecutiva más larga
-//   - una condición rompe el conteo y obliga a reiniciar
-//
-// Complejidad:
-//   - Tiempo: O(n)
-//   - Espacio: O(1)
-func FindMaxConsecutiveOnes(nums []int) int {
-	currentCount := 0
-	lastMaxCount := 0
-	for _, v := range nums {
-		if v == 1 {
-			currentCount++
-			lastMaxCount = max(lastMaxCount, currentCount)
-		} else {
-			currentCount = 0
-		}
-	}
-	return lastMaxCount
-}
-
-// ============================================================================
 // Array 2
 // ============================================================================
 
@@ -1628,19 +1555,19 @@ func NextLargerNodes(head *ListNode) []int {
 //   - Tiempo: O(n)
 //   - Espacio: O(min(n,k))
 func CheckSubarraySum(nums []int, k int) bool {
-    mods := make(map[int]int)
-    mods[0] = -1
-    prefixSum := 0
-    for i, v := range nums {
-        prefixSum += v
-        mod := prefixSum % k
-        if idx, ok := mods[mod]; ok {
-            if i - idx >= 2 {
-                return true
-            }
-        } else {
-            mods[mod] = i
-        }
-    }
-    return false
+	mods := make(map[int]int)
+	mods[0] = -1
+	prefixSum := 0
+	for i, v := range nums {
+		prefixSum += v
+		mod := prefixSum % k
+		if idx, ok := mods[mod]; ok {
+			if i-idx >= 2 {
+				return true
+			}
+		} else {
+			mods[mod] = i
+		}
+	}
+	return false
 }
