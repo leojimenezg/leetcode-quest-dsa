@@ -6,99 +6,9 @@ package problems
 
 import (
 	"container/heap"
-	"sort"
 	"strconv"
 	"strings"
 )
-
-// ============================================================================
-// Array 2
-// ============================================================================
-
-// Set Mismatch
-// Patrones:
-//   - Hash Table
-//   - Mathematical Invariants
-//
-// Útil cuando:
-//   - se detectan duplicados y valores faltantes
-//   - se conoce el rango esperado de valores
-//
-// Complejidad:
-//   - Tiempo: O(n)
-//   - Espacio: O(n)
-func FindErrorNums(nums []int) []int {
-	n := len(nums)
-	expectedSum := n * (n + 1) / 2
-	repeatedNum := -1
-	actualSum := 0
-	seenNums := make(map[int]bool)
-	for _, v := range nums {
-		if _, ok := seenNums[v]; ok {
-			repeatedNum = v
-		}
-		seenNums[v] = true
-		actualSum += v
-	}
-	lossNum := expectedSum - (actualSum - repeatedNum)
-	return []int{repeatedNum, lossNum}
-}
-
-// How Many Numbers Are Smaller Than the Current Number
-// Patrones:
-//   - Sorting
-//   - Value Compression
-//
-// Útil cuando:
-//   - se necesita ranking relativo
-//   - O(n log n) es aceptable
-//
-// Complejidad:
-//   - Tiempo: O(n log n)
-//   - Espacio: O(n)
-func SmallerNumbersThanCurrent(nums []int) []int {
-	n := len(nums)
-	sorted := make([]int, n)
-	copy(sorted, nums)
-	sort.Ints(sorted)
-	count := make(map[int]int)
-	for i, v := range sorted {
-		if _, exists := count[v]; !exists {
-			count[v] = i
-		}
-	}
-	for i, v := range nums {
-		sorted[i] = count[v]
-	}
-	return sorted
-}
-
-// Find All Numbers Disappeared in an Array
-// Patrones:
-//   - Index as Hash
-//   - Presence Tracking
-//
-// Útil cuando:
-//   - el rango de valores es conocido (1...n)
-//   - se puede usar el índice como estructura auxiliar
-//
-// Complejidad:
-//   - Tiempo: O(n)
-//   - Espacio: O(n)
-func FindDisappearedNumbers(nums []int) []int {
-	n := len(nums)
-	nonRepeated := make([]bool, n)
-	for _, v := range nums {
-		nonRepeated[v-1] = true
-	}
-	missing := make([]int, 0)
-	for i, v := range nonRepeated {
-		if !v {
-			missing = append(missing, i+1)
-		}
-	}
-	return missing
-}
 
 // ============================================================================
 // Stack
