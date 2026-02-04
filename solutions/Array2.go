@@ -39,7 +39,6 @@ func FindErrorNums(nums []int) []int {
 // How Many Numbers Are Smaller Than the Current Number
 // Patrones:
 //   - Sorting
-//   - Value Compression
 //
 // Útil cuando:
 //   - se necesita ranking relativo
