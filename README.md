@@ -6,11 +6,11 @@ A collection of solutions for the "LeetCode Quest: Data Structures and Algorithm
 
 **For problems I solved independently:**
 - Solve without any help and get it accepted on LeetCode
-- Use Claude to identify improvements and patterns
+- Use IA to identify improvements and patterns
 - Document the problem with useful insights
 
 **For problems that required guidance:**
-- Use Claude for high-level logic guidance only
+- Use IA for high-level logic guidance only
 - Implement my own solution based on that logic
 - Document the approach and patterns learned
 
