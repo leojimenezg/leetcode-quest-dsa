@@ -10,46 +10,6 @@ import (
 )
 
 // ============================================================================
-// Assignment 2
-// ============================================================================
-
-// Remove Duplicate Letters
-// Patrones:
-//   - Greedy
-//   - Monotonic Stack (increasing)
-//
-// Útil cuando:
-//   - se construye una secuencia lexicográficamente mínima
-//   - se permiten rollback de decisiones previas
-//
-// Complejidad:
-//   - Tiempo: O(n)
-//   - Espacio: O(n)
-func RemoveDuplicateLetters(s string) string {
-	lastIndex := make(map[rune]int)
-	for i, l := range s {
-		lastIndex[l] = i
-	}
-	used := make(map[rune]bool)
-	stack := make([]rune, 0)
-	for idx, lt := range s {
-		if used[lt] {
-			continue
-		}
-		for len(stack) > 0 &&
-			lt < stack[len(stack)-1] &&
-			lastIndex[stack[len(stack)-1]] > idx {
-			stackTop := stack[len(stack)-1]
-			stack = stack[:len(stack)-1]
-			used[stackTop] = false
-		}
-		stack = append(stack, lt)
-		used[lt] = true
-	}
-	return string(stack)
-}
-
-// ============================================================================
 // Queue
 // ============================================================================
 
