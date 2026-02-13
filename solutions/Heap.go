@@ -71,7 +71,7 @@ func KSmallestPairs(nums1 []int, nums2 []int, k int) [][]int {
 
 // Construct Target Array With Multiple Sums
 // Patrones:
-//   - Reverse Greedy
+//   - Greedy
 //   - Priority Queue (Max Heap)
 //   - Mathematical Reduction (Module)
 //
