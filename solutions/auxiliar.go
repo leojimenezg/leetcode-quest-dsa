@@ -109,3 +109,8 @@ func (h *MinHeapPairs) Pop() any {
 	*h = old[:n-1]
 	return item
 }
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
