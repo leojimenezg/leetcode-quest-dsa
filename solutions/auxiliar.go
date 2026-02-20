@@ -114,3 +114,16 @@ type ListNode struct {
 	Val  int
 	Next *ListNode
 }
+
+type Node struct {
+	Val    int
+	Next   *Node
+	Random *Node
+}
+
+func abs(x int) int {
+	if x < 0 {
+		return -x
+	}
+	return x
+}
