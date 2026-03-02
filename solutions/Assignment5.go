@@ -62,7 +62,7 @@ func CheckSubarraySum(nums []int, k int) bool {
 		prefixSum += v
 		mod := prefixSum % k
 		if idx, ok := mods[mod]; ok {
-			if i - idx >= 2 {
+			if i-idx >= 2 {
 				return true
 			}
 		} else {
