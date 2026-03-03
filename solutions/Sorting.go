@@ -39,3 +39,31 @@ func minimumAbsDifference(arr []int) [][]int {
 	}
 	return pairs
 }
+
+// Reduction Operations to Make the Array Elements Equal
+// Patrones:
+//   - Sorting
+//   - Linear Scan
+//
+// Útil cuando:
+//   - se cuenta el costo acumulado de reducir elementos a un mínimo común
+//   - cada nivel distinto incrementa el costo de todos los elementos superiores
+//   - el orden entre elementos es clave para detectar cambios de nivel
+//
+// Complejidad:
+//   - Tiempo: O(n log n)
+//   - Espacio: O(log n)
+func reductionOperations(nums []int) int {
+	sort.Ints(nums)
+	steps := 0
+	ops := 0
+	for i := 1; i < len(nums); i++ {
+		if nums[i] != nums[i-1] {
+			steps++
+			ops += steps
+		} else {
+			ops += steps
+		}
+	}
+	return ops
+}
