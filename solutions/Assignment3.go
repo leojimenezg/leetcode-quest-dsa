@@ -42,7 +42,7 @@ func (h *MinHeapApples) Pop() any {
 // Complejidad:
 //   - Tiempo: O(n log n)
 //   - Espacio: O(n)
-func EatenApples(apples []int, days []int) int {
+func eatenApples(apples []int, days []int) int {
 	n := len(apples)
 	count := 0
 	minHeap := &MinHeapApples{}

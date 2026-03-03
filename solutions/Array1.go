@@ -16,7 +16,7 @@ package solutions
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(n)
-func GetConcatenation(nums []int) []int {
+func getConcatenation(nums []int) []int {
 	n := len(nums)
 	res := make([]int, 2*n)
 	for i, v := range nums {
@@ -39,7 +39,7 @@ func GetConcatenation(nums []int) []int {
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(n)
-func Shuffle(nums []int, n int) []int {
+func shuffle(nums []int, n int) []int {
 	res := make([]int, 2*n)
 	for i := range n {
 		res[2*i] = nums[i]
@@ -60,7 +60,7 @@ func Shuffle(nums []int, n int) []int {
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(1)
-func FindMaxConsecutiveOnes(nums []int) int {
+func findMaxConsecutiveOnes(nums []int) int {
 	maxFinal := 0
 	maxCurrent := 0
 	for _, v := range nums {

@@ -19,7 +19,7 @@ import "sort"
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(n)
-func FindErrorNums(nums []int) []int {
+func findErrorNums(nums []int) []int {
 	n := len(nums)
 	expectedSum := n * (n + 1) / 2
 	actualSum := 0
@@ -47,7 +47,7 @@ func FindErrorNums(nums []int) []int {
 // Complejidad:
 //   - Tiempo: O(n log n)
 //   - Espacio: O(n)
-func SmallerNumbersThanCurrent(nums []int) []int {
+func smallerNumbersThanCurrent(nums []int) []int {
 	n := len(nums)
 	sorted := make([]int, n)
 	copy(sorted, nums)
@@ -75,7 +75,7 @@ func SmallerNumbersThanCurrent(nums []int) []int {
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(n)
-func FindDisappearedNumbers(nums []int) []int {
+func findDisappearedNumbers(nums []int) []int {
 	n := len(nums)
 	uniques := make([]bool, n)
 	for _, v := range nums {

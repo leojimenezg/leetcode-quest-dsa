@@ -17,7 +17,7 @@ package solutions
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(1)
-func DeleteDuplicates(head *ListNode) *ListNode {
+func deleteDuplicates(head *ListNode) *ListNode {
 	var prev *ListNode
 	for current := head; current != nil; current = current.Next {
 		if prev != nil {
@@ -47,7 +47,7 @@ func DeleteDuplicates(head *ListNode) *ListNode {
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(1)
-func OddEvenList(head *ListNode) *ListNode {
+func oddEvenList(head *ListNode) *ListNode {
 	if head == nil {
 		return nil
 	}
@@ -79,7 +79,7 @@ func OddEvenList(head *ListNode) *ListNode {
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(1)
-func ReverseList(head *ListNode) *ListNode {
+func reverseList(head *ListNode) *ListNode {
 	current := head
 	var prev *ListNode
 	for current != nil {

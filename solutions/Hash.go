@@ -17,7 +17,7 @@ package solutions
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(n)
-func TwoSum(nums []int, target int) []int {
+func twoSum(nums []int, target int) []int {
 	uniques := make(map[int]int)
 	for i, v := range nums {
 		uniques[v] = i
@@ -45,7 +45,7 @@ func TwoSum(nums []int, target int) []int {
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(n)
-func CopyRandomList(head *Node) *Node {
+func copyRandomList(head *Node) *Node {
 	if head == nil {
 		return nil
 	}
@@ -77,7 +77,7 @@ func CopyRandomList(head *Node) *Node {
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(1)
-func FirstMissingPositive(nums []int) int {
+func firstMissingPositive(nums []int) int {
 	n := len(nums)
 	for i, v := range nums {
 		if v <= 0 || v > n {

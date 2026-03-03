@@ -16,7 +16,7 @@ package solutions
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(n)
-func FinalPrices(prices []int) []int {
+func finalPrices(prices []int) []int {
 	n := len(prices)
 	answer := make([]int, n)
 	copy(answer, prices)
@@ -43,7 +43,7 @@ func FinalPrices(prices []int) []int {
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(n)
-func DailyTemperatures(temperatures []int) []int {
+func dailyTemperatures(temperatures []int) []int {
 	n := len(temperatures)
 	answer := make([]int, n)
 	stack := make([]int, 0, n)
@@ -70,7 +70,7 @@ func DailyTemperatures(temperatures []int) []int {
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(n)
-func LargestRectangleArea(heights []int) int {
+func largestRectangleArea(heights []int) int {
 	n := len(heights)
 	res := 0
 	stack := make([]int, 0, n)

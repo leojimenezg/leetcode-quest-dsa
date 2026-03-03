@@ -17,7 +17,7 @@ package solutions
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(1)
-func CountStudents(students []int, sandwiches []int) int {
+func countStudents(students []int, sandwiches []int) int {
 	wanted := [2]int{0, 0}
 	for _, s := range students {
 		wanted[s]++
@@ -44,7 +44,7 @@ func CountStudents(students []int, sandwiches []int) int {
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(1)
-func TimeRequiredToBuy(tickets []int, k int) int {
+func timeRequiredToBuy(tickets []int, k int) int {
 	res := 0
 	for i := range tickets {
 		if i < k {

@@ -21,7 +21,7 @@ package solutions
 // Complejidad:
 //   - Tiempo: O(n^2)
 //   - Espacio: O(n)
-func NextLargerNodes(head *ListNode) []int {
+func nextLargerNodes(head *ListNode) []int {
 	n := 0
 	for cur := head; cur != nil; cur = cur.Next {
 		n++
@@ -54,7 +54,7 @@ func NextLargerNodes(head *ListNode) []int {
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(min(n,k))
-func CheckSubarraySum(nums []int, k int) bool {
+func checkSubarraySum(nums []int, k int) bool {
 	mods := make(map[int]int)
 	mods[0] = -1
 	prefixSum := 0

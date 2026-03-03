@@ -18,7 +18,7 @@ import "container/heap"
 // Complejidad:
 //   - Tiempo: O(n log n)
 //   - Espacio: O(n)
-func LastStoneWeight(stones []int) int {
+func lastStoneWeight(stones []int) int {
 	maxHeap := MaxHeap(stones)
 	heap.Init(&maxHeap)
 	for maxHeap.Len() > 1 {
@@ -45,7 +45,7 @@ func LastStoneWeight(stones []int) int {
 // Complejidad:
 //   - Tiempo: O(k log k)
 //   - Espacio: O(k)
-func KSmallestPairs(nums1 []int, nums2 []int, k int) [][]int {
+func kSmallestPairs(nums1 []int, nums2 []int, k int) [][]int {
 	pairs := make([][]int, 0, k)
 	visited := make(map[PairKey]bool)
 	minHeap := &MinHeapPairs{}
@@ -83,7 +83,7 @@ func KSmallestPairs(nums1 []int, nums2 []int, k int) [][]int {
 // Complejidad:
 //   - Tiempo: O(n log n)
 //   - Espacio: O(n)
-func IsPossible(target []int) bool {
+func isPossible(target []int) bool {
 	maxHeap := MaxHeap(target)
 	heap.Init(&maxHeap)
 	currentSum := 0

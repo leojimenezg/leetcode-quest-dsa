@@ -17,7 +17,7 @@ package solutions
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(1)
-func PlusOne(digits []int) []int {
+func plusOne(digits []int) []int {
 	n := len(digits)
 	carry := true
 	for i := n - 1; i >= 0; i-- {
@@ -50,7 +50,7 @@ func PlusOne(digits []int) []int {
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(1)
-func ValidMountainArray(arr []int) bool {
+func validMountainArray(arr []int) bool {
 	n := len(arr)
 	if n < 3 {
 		return false

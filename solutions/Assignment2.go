@@ -16,7 +16,7 @@ package solutions
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(n)
-func RemoveDuplicateLetters(s string) string {
+func removeDuplicateLetters(s string) string {
 	uniques := make(map[rune]int)
 	for i, l := range s {
 		uniques[l] = i

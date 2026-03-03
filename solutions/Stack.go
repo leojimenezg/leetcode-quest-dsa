@@ -22,7 +22,7 @@ import (
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(n)
-func BuildArray(target []int, n int) []string {
+func buildArray(target []int, n int) []string {
 	ops := make([]string, 0, 2*n)
 	idx := 0
 	for v := 1; v <= n; v++ {
@@ -51,7 +51,7 @@ func BuildArray(target []int, n int) []string {
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(n)
-func EvalRPN(tokens []string) int {
+func evalRPN(tokens []string) int {
 	stack := make([]int, 0, len(tokens))
 	for _, token := range tokens {
 		n := len(stack)
@@ -91,7 +91,7 @@ func EvalRPN(tokens []string) int {
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(n)
-func ExclusiveTime(n int, logs []string) []int {
+func exclusiveTime(n int, logs []string) []int {
 	times := make([]int, n)
 	stack := make([]int, 0, len(logs))
 	prevTime := 0

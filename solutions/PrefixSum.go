@@ -47,7 +47,7 @@ func largestAltitude(gain []int) int {
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(n)
-func MinSubarray(nums []int, p int) int {
+func minSubarray(nums []int, p int) int {
 	total := 0
 	for _, v := range nums {
 		total += v
@@ -94,7 +94,7 @@ func MinSubarray(nums []int, p int) int {
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(1)
-func WaysToMakeFair(nums []int) int {
+func waysToMakeFair(nums []int) int {
 	totalEven, totalOdd := 0, 0
 	for i, v := range nums {
 		if i%2 == 0 {

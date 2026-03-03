@@ -19,7 +19,7 @@ import "strings"
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(n) por creación de strings auxiliares
-func DetectCapitalUse(word string) bool {
+func detectCapitalUse(word string) bool {
 	upper := strings.ToUpper(word)
 	if upper == word {
 		return true
@@ -50,7 +50,7 @@ func DetectCapitalUse(word string) bool {
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(n)
-func LicenseKeyFormatting(s string, k int) string {
+func licenseKeyFormatting(s string, k int) string {
 	n := len(s)
 	upper := strings.ToUpper(s)
 	res := make([]byte, 0, n)
@@ -87,7 +87,7 @@ func LicenseKeyFormatting(s string, k int) string {
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(n)
-func MaskPII(s string) string {
+func maskPII(s string) string {
 	atIdx := strings.Index(s, "@")
 	var res strings.Builder
 	if atIdx > 0 {

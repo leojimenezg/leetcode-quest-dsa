@@ -21,7 +21,7 @@ import "strings"
 // Complejidad:
 //   - Tiempo: O(n^2)
 //   - Espacio: O(1)
-func RepeatedSubstringPattern(s string) bool {
+func repeatedSubstringPattern(s string) bool {
 	n := len(s)
 	for length := 1; length <= n/2; length++ {
 		if n%length != 0 {
@@ -57,7 +57,7 @@ func RepeatedSubstringPattern(s string) bool {
 // Complejidad:
 //   - Tiempo: O(n) en promedio (dependiente del algoritmo de búsqueda de substring)
 //   - Espacio: O(n) por la concatenación de strings
-func RotateString(s string, goal string) bool {
+func rotateString(s string, goal string) bool {
 	if len(s) != len(goal) {
 		return false
 	}
@@ -81,7 +81,7 @@ func RotateString(s string, goal string) bool {
 // Complejidad:
 //   - Tiempo: O(n * m) en el peor caso
 //   - Espacio: O(n) por la construcción del string repetido
-func RepeatedStringMatch(a string, b string) int {
+func repeatedStringMatch(a string, b string) int {
 	minReps := (len(b) + len(a) - 1) / len(a) // Ceiling division
 	var reps strings.Builder
 	for range minReps {

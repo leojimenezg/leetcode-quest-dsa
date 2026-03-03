@@ -19,7 +19,7 @@ import "strings"
 // Complejidad:
 //   - Tiempo: O(n)
 //   - Espacio: O(n)
-func ReformatDate(date string) string {
+func reformatDate(date string) string {
 	elements := strings.Split(date, " ")
 	switch elements[1] {
 	case "Jan":
@@ -71,7 +71,7 @@ func ReformatDate(date string) string {
 // Complejidad:
 //   - Tiempo: O(n^2)
 //   - Espacio: O(n)
-func MaxRepeating(sequence string, word string) int {
+func maxRepeating(sequence string, word string) int {
 	k := len(sequence) / len(word)
 	var repeated strings.Builder
 	for i := range k {
