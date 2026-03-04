@@ -67,3 +67,36 @@ func reductionOperations(nums []int) int {
 	}
 	return ops
 }
+
+// Merge Intervals
+// Patrones:
+//   - Sorting
+//   - Linear Scan
+//
+// Útil cuando:
+//   - se fusionan intervalos solapados
+//   - ordenar por inicio garantiza que solapamientos son siempre contiguos
+//   - se necesita mantener el último resultado para comparaciones sucesivas
+//
+// Complejidad:
+//   - Tiempo: O(n log n)
+//   - Espacio: O(log n)
+func merge(intervals [][]int) [][]int {
+	n := len(intervals)
+	res := make([][]int, 0, n)
+	sort.Slice(intervals, func(i, j int) bool {
+		return intervals[i][0] < intervals[j][0]
+	})
+	for _, current := range intervals {
+		m := len(res)
+		if m > 0 {
+			prev := res[m-1]
+			if prev[1] >= current[0] {
+				res[m-1][1] = max(prev[1], current[1])
+				continue
+			}
+		}
+		res = append(res, current)
+	}
+	return res
+}
