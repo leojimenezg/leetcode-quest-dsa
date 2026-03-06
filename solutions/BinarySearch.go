@@ -4,6 +4,8 @@
 
 package solutions
 
+import "math"
+
 // Peak Index in Mountain Array
 // Patrones:
 //   - Binary Search
@@ -46,7 +48,7 @@ func search(nums []int, target int) int {
 	left := 0
 	right := len(nums)
 	for (right - left) > 1 {
-		mid := (left + right) / 2 - 1
+		mid := (left+right)/2 - 1
 		if nums[mid] == target {
 			return mid
 		} else if nums[mid] < target {
@@ -59,4 +61,32 @@ func search(nums []int, target int) int {
 		return left
 	}
 	return -1
+}
+
+// Sum of Square Numbers
+// Patrones:
+//   - Two Pointers
+//
+// Útil cuando:
+//   - se busca un par de valores que satisfacen una condición matemática
+//   - el espacio de búsqueda tiene límites definidos
+//   - se puede descartar candidatos moviendo punteros hacia un punto común
+//
+// Complejidad:
+//   - Tiempo: O(sqrt(c))
+//   - Espacio: O(1)
+func judgeSquareSum(c int) bool {
+	a := 0
+	b := int(math.Sqrt(float64(c)))
+	for a <= b {
+		sum := (a * a) + (b * b)
+		if sum == c {
+			return true
+		} else if sum < c {
+			a++
+		} else {
+			b--
+		}
+	}
+	return false
 }
