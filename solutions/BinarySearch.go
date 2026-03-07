@@ -46,19 +46,16 @@ func peakIndexInMountainArray(arr []int) int {
 //   - Espacio: O(1)
 func search(nums []int, target int) int {
 	left := 0
-	right := len(nums)
-	for (right - left) > 1 {
-		mid := (left+right)/2 - 1
+	right := len(nums) - 1
+	for right >= left {
+		mid := (left + right) / 2
 		if nums[mid] == target {
 			return mid
 		} else if nums[mid] < target {
 			left = mid + 1
 		} else {
-			right = mid
+			right = mid - 1
 		}
-	}
-	if nums[left] == target {
-		return left
 	}
 	return -1
 }
@@ -89,4 +86,41 @@ func judgeSquareSum(c int) bool {
 		}
 	}
 	return false
+}
+
+// Search in Rotated Sorted Array
+// Patrones:
+//   - Binary Search
+//
+// Útil cuando:
+//   - se busca un elemento en un arreglo rotado
+//   - una de las dos mitades siempre está ordenada
+//   - se puede descartar una mitad verificando si el target está en el rango ordenado
+//
+// Complejidad:
+//   - Tiempo: O(log n)
+//   - Espacio: O(1)
+func search(nums []int, target int) int {
+	left := 0
+	right := len(nums) - 1
+	for right >= left {
+		mid := (left + right) / 2
+		if nums[mid] == target {
+			return mid
+		}
+		if nums[left] <= nums[mid] {
+			if nums[left] <= target && target < nums[mid] {
+				right = mid - 1
+			} else {
+				left = mid + 1
+			}
+		} else {
+			if nums[mid] < target && target <= nums[right] {
+				left = mid + 1
+			} else {
+				right = mid - 1
+			}
+		}
+	}
+	return -1
 }
