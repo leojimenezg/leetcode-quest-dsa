@@ -145,3 +145,25 @@ func (h *MinHeap) Pop() any {
 	*h = old[:n-1]
 	return item
 }
+
+func heapify(s []int, n, i int) {
+	largestIdx := i
+	leftIdx := 2*i + 1
+	rightIdx := 2*i + 2
+	if leftIdx < n && s[leftIdx] > s[largestIdx] {
+		largestIdx = leftIdx
+	}
+	if rightIdx < n && s[rightIdx] > s[largestIdx] {
+		largestIdx = rightIdx
+	}
+	if largestIdx != i {
+		s[i], s[largestIdx] = s[largestIdx], s[i]
+		heapify(s, n, largestIdx)
+	}
+}
+
+func buildHeap(s []int, n int) {
+	for i := n/2 - 1; i >= 0; i-- {
+		heapify(s, n, i)
+	}
+}
