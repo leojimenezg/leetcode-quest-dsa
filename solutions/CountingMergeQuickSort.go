@@ -1,8 +1,6 @@
 package solutions
 
-import (
-	"container/heap"
-)
+import "container/heap"
 
 // Find Kth Largest Element in an Array
 // Patrones:
@@ -48,4 +46,36 @@ func sortArray(nums []int) []int {
 		heapify(nums, lastIdx, 0)
 	}
 	return nums
+}
+
+// Insertion Sort List
+// Patrones:
+//   - Insertion Sort
+//
+// Útil cuando:
+//   - se ordena una linked list sin acceso aleatorio a sus elementos
+//   - se reutilizan los nodos existentes sin asignar memoria adicional
+//   - se mantiene una lista ordenada creciente insertando un nodo a la vez
+//
+// Complejidad:
+//   - Tiempo: O(n^2)
+//   - Espacio: O(1)
+func insertionSortList(head *ListNode) *ListNode {
+	sortHead := &ListNode{}
+	for current := head; current != nil; {
+		next := current.Next
+		for node := sortHead; node != nil; node = node.Next {
+			if node.Next == nil {
+				current.Next = nil
+				node.Next = current
+				break
+			} else if current.Val < node.Next.Val {
+				current.Next = node.Next
+				node.Next = current
+				break
+			}
+		}
+		current = next
+	}
+	return sortHead.Next
 }
