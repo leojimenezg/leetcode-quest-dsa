@@ -167,3 +167,9 @@ func buildHeap(s []int, n int) {
 		heapify(s, n, i)
 	}
 }
+
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
