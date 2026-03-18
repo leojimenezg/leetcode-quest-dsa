@@ -4,6 +4,8 @@
 
 package solutions
 
+import "sort"
+
 // Merge Sorted Array
 // Patrones:
 //   - Two Pointers
@@ -35,4 +37,38 @@ func merge(nums1 []int, m int, nums2 []int, n int) {
 		nums1[k] = nums2[j]
 		k--
 	}
+}
+
+// Find Right Interval
+// Patrones:
+//   - Binary Search
+//   - Hash Table
+//
+// Útil cuando:
+//   - se busca el mínimo valor mayor o igual a un target
+//   - los valores son únicos y permiten mapeo directo a índices
+//   - ordenar previamente habilita búsqueda eficiente
+//
+// Complejidad:
+//   - Tiempo: O(n log n)
+//   - Espacio: O(n)
+func findRightInterval(intervals [][]int) []int {
+	n := len(intervals)
+	startToOriginalIdx := make(map[int]int)
+	sortedStarts := make([]int, 0, n)
+	for originalIdx, interval := range intervals {
+		startToOriginalIdx[interval[0]] = originalIdx
+		sortedStarts = append(sortedStarts, interval[0])
+	}
+	sort.Ints(sortedStarts)
+	res := make([]int, n)
+	for i, interval := range intervals {
+		rightIntervalIdx := sort.SearchInts(sortedStarts, interval[1])
+		if rightIntervalIdx == n {
+			res[i] = -1
+		} else {
+			res[i] = startToOriginalIdx[sortedStarts[rightIntervalIdx]]
+		}
+	}
+	return res
 }
