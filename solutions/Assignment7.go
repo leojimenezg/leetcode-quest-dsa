@@ -4,7 +4,10 @@
 
 package solutions
 
-import "slices"
+import (
+	"slices"
+	"sort"
+)
 
 // Minimum Number of Days to Make m Bouquets
 // Patrones:
@@ -48,4 +51,46 @@ func minDays(bloomDay []int, m int, k int) int {
 		}
 	}
 	return left
+}
+
+// Merge k Sorted Lists
+// Patrones:
+//   - Sorting
+//
+// Útil cuando:
+//   - se unifican múltiples estructuras en una sola
+//   - el orden relativo entre elementos es lo único relevante
+//   - el origen de los elementos no importa tras la unificación
+//
+// Complejidad:
+//   - Tiempo: O(n log n)
+//   - Espacio: O(n)
+func mergeKLists(lists []*ListNode) *ListNode {
+	k := len(lists)
+	if k == 0 {
+		return nil
+	}
+	n := 0
+	for _, head := range lists {
+		for current := head; current != nil; current = current.Next {
+			n++
+		}
+	}
+	if n == 0 {
+		return nil
+	}
+	unifiedNodes := make([]*ListNode, 0, n)
+	for _, head := range lists {
+		for current := head; current != nil; current = current.Next {
+			unifiedNodes = append(unifiedNodes, current)
+		}
+	}
+	sort.Slice(unifiedNodes, func(i, j int) bool {
+		return unifiedNodes[i].Val < unifiedNodes[j].Val
+	})
+	for i := 0; i < n-1; i++ {
+		unifiedNodes[i].Next = unifiedNodes[i+1]
+	}
+	unifiedNodes[n-1].Next = nil
+	return unifiedNodes[0]
 }
