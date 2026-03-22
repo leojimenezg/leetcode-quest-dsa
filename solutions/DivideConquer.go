@@ -88,7 +88,7 @@ func reversePairs(nums []int) int {
 		}
 		leftArr := make([]int, n/2)
 		copy(leftArr, arr[:n/2])
-		rightArr := make([]int, n-n/2)
+		rightArr := make([]int, n/2+1)
 		copy(rightArr, arr[n/2:])
 		left := mergeSort(leftArr)
 		right := mergeSort(rightArr)
