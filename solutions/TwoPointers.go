@@ -4,6 +4,8 @@
 
 package solutions
 
+import "sort"
+
 // Linked List Cycle
 // Patrones:
 //   - Two Pointers
@@ -27,4 +29,42 @@ func hasCycle(head *ListNode) bool {
 		}
 	}
 	return false
+}
+
+// 3Sum Closest
+// Patrones:
+//   - Sorting
+//   - Two Pointers
+//
+// Útil cuando:
+//   - se busca una tripleta cuya suma se acerca a un target
+//   - ordenar permite descartar candidatos moviendo pointers
+//   - se fija un elemento y se reduce el problema a un par
+//
+// Complejidad:
+//   - Tiempo: O(n^2)
+//   - Espacio: O(log n)
+func threeSumClosest(nums []int, target int) int {
+	n := len(nums)
+	sort.Ints(nums)
+	sum := nums[0] + nums[1] + nums[2]
+	for i := range nums {
+		left := i + 1
+		right := n - 1
+		for left < right {
+			threeSum := nums[i] + nums[left] + nums[right]
+			if threeSum < target {
+				left++
+			} else if threeSum > target {
+				right--
+			} else {
+				return threeSum
+			}
+			diff := abs(threeSum - target)
+			if diff < abs(sum-target) {
+				sum = threeSum
+			}
+		}
+	}
+	return sum
 }
