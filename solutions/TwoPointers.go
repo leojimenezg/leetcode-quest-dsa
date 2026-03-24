@@ -68,3 +68,35 @@ func threeSumClosest(nums []int, target int) int {
 	}
 	return sum
 }
+
+// Magical String
+// Patrones:
+//   - Two Pointers
+//   - Self-referential Generation
+//
+// Útil cuando:
+//   - una secuencia se construye usando sus propios valores como instrucciones
+//   - un índice lee la secuencia mientras otro la genera
+//   - los valores se alternan entre dos opciones fijas
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(n)
+func magicalString(n int) int {
+	s := make([]int, 0, 2*n)
+	s = append(s, 1, 2, 2)
+	onesCount := 1
+	idx := 2
+	group := 1
+	for idx < n {
+		for range s[idx] {
+			if len(s) < n && group == 1 {
+				onesCount++
+			}
+			s = append(s, group)
+		}
+		group = 3 - group
+		idx++
+	}
+	return onesCount
+}
