@@ -17,7 +17,7 @@ func containsNearbyDuplicate(nums []int, k int) bool {
 	lastIndexes := make(map[int]int, len(nums))
 	for i, v := range nums {
 		if j, ok := lastIndexes[v]; ok {
-			if abs(i-j) <= k {
+			if i-j <= k {
 				return true
 			}
 		}
