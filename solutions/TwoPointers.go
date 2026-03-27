@@ -86,9 +86,8 @@ func magicalString(n int) int {
 	s := make([]int, 0, 2*n)
 	s = append(s, 1, 2, 2)
 	onesCount := 1
-	idx := 2
 	group := 1
-	for idx < n {
+	for idx := 2; idx < n; idx++ {
 		for range s[idx] {
 			if len(s) < n && group == 1 {
 				onesCount++
@@ -96,7 +95,6 @@ func magicalString(n int) int {
 			s = append(s, group)
 		}
 		group = 3 - group
-		idx++
 	}
 	return onesCount
 }
