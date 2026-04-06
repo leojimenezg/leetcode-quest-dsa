@@ -78,3 +78,52 @@ func longestPrefix(s string) string {
 	}
 	return s[:longestIdx+1]
 }
+
+// Sum of Scores of Built Strings
+//
+// Patrones:
+//   - Z-Algorithm
+//
+// Útil cuando:
+//   - se necesita calcular el longest common prefix entre el string completo y cada uno de sus sufijos
+//   - se requiere O(n) en lugar de O(n^2)
+//   - se puede reutilizar trabajo previo mediante una ventana [left, right] (Z-box)
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(n)
+func sumScores(s string) int64 {
+	n := len(s)
+	zArray := make([]int, n)
+	zArray[0] = n
+	left, right := 0, 0
+	for idx := 1; idx < n; idx++ {
+		if idx > right {
+			offset := 0
+			for idx+offset < n && s[idx+offset] == s[offset] {
+				zArray[idx]++
+				offset++
+			}
+			left = idx
+			right = idx + offset - 1
+		} else {
+			if zArray[idx-left] < right-idx+1 {
+				zArray[idx] = zArray[idx-left]
+			} else {
+				zArray[idx] = right - idx + 1
+				offset := right - idx + 1
+				for idx+offset < n && s[idx+offset] == s[offset] {
+					zArray[idx]++
+					offset++
+				}
+				left = idx
+				right = idx + zArray[idx] - 1
+			}
+		}
+	}
+	totalScore := 0
+	for _, v := range zArray {
+		totalScore += v
+	}
+	return int64(totalScore)
+}
