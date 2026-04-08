@@ -33,3 +33,36 @@ func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
 		return list2
 	}
 }
+
+// Find Kth Bit in Nth Binary String
+//
+// Patrones:
+//   - Divide and Conquer
+//   - Recursion
+//
+// Útil cuando:
+//   - el string tiene estructura simétrica recursiva
+//   - se puede determinar en qué mitad cae k sin construir el string
+//   - la mitad derecha es inverse(reverse) de la izquierda
+//
+// Complejidad:
+//   - Tiempo: O(n)
+//   - Espacio: O(n)
+func findKthBit(n int, k int) byte {
+	if n == 1 {
+		return '0'
+	}
+	size := (1 << n) - 1
+	mid := (size + 2 - 1) / 2
+	if k == mid {
+		return '1'
+	} else if k < mid {
+		return findKthBit(n-1, k)
+	} else {
+		bit := findKthBit(n-1, size-k+1)
+		if bit == '0' {
+			return '1'
+		}
+		return '0'
+	}
+}
