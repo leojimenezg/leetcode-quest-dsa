@@ -4,6 +4,11 @@
 
 package solutions
 
+import (
+	"strconv"
+	"strings"
+)
+
 // Merge Two Sorted Lists
 //
 // Patrones:
@@ -65,4 +70,48 @@ func findKthBit(n int, k int) byte {
 		}
 		return '0'
 	}
+}
+
+// Decode String
+//
+// Patrones:
+//   - Recursion
+//
+// Útil cuando:
+//   - se procesan estructuras anidadas
+//   - cada nivel de anidamiento puede resolverse independientemente
+//   - un índice compartido permite avanzar el estado entre llamadas recursivas
+//
+// Complejidad:
+//   - Tiempo: O(n * k)
+//   - Espacio: O(n)
+func decodeString(s string) string {
+	n := len(s)
+	idx := 0
+	var decode func() string
+	decode = func() string {
+		kStr := strings.Builder{}
+		str := strings.Builder{}
+		for idx < n && s[idx] != ']' {
+			c := s[idx]
+			if c >= 'a' && c <= 'z' {
+				str.WriteByte(c)
+				idx++
+			} else if c >= '0' && c <= '9' {
+				kStr.WriteByte(c)
+				idx++
+			} else {
+				idx++
+				sub := decode()
+				idx++
+				k, _ := strconv.Atoi(kStr.String())
+				for range k {
+					str.WriteString(sub)
+				}
+				kStr.Reset()
+			}
+		}
+		return str.String()
+	}
+	return decode()
 }
