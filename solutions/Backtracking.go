@@ -4,6 +4,8 @@
 
 package solutions
 
+import "strconv"
+
 // Combinations
 //
 // Patrones:
@@ -34,5 +36,43 @@ func combine(n int, k int) [][]int {
 		}
 	}
 	backtrack(1, []int{})
+	return res
+}
+
+// Restore IP Addresses
+//
+// Patrones:
+//   - Backtracking
+//
+// Útil cuando:
+//   - se particiona un string en segmentos con restricciones estrictas
+//   - el número de segmentos es fijo (4 octetos)
+//   - se puede podar temprano cuando un segmento es inválido (> 255 o leading zero)
+//
+// Complejidad:
+//   - Tiempo: O(1) — el espacio de búsqueda está acotado (máximo 3^4 = 81 combinaciones)
+//   - Espacio: O(1) — profundidad del call stack es siempre 4
+func restoreIpAddresses(s string) []string {
+	n := len(s)
+	res := make([]string, 0)
+	if n > 12 {
+		return res
+	}
+	var backtrack func(idx, dots int, curIP string)
+	backtrack = func(idx, dots int, curIP string) {
+		if dots == 4 && idx == n {
+			res = append(res, curIP[:len(curIP)-1])
+			return
+		} else if dots > 4 {
+			return
+		}
+		for i := idx; i < min(i+3, n); i++ {
+			seg, _ := strconv.Atoi(s[idx : i+1])
+			if seg < 256 && (s[idx] != '0' || i == idx) {
+				backtrack(i+1, dots+1, curIP+s[idx:i+1]+".")
+			}
+		}
+	}
+	backtrack(0, 0, "")
 	return res
 }
