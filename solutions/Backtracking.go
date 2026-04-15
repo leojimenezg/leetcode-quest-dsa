@@ -4,7 +4,9 @@
 
 package solutions
 
-import "strconv"
+import (
+	"strconv"
+)
 
 // Combinations
 //
@@ -74,5 +76,48 @@ func restoreIpAddresses(s string) []string {
 		}
 	}
 	backtrack(0, 0, "")
+	return res
+}
+
+// Get the K-th Lexicographically Smallest Happy String
+//
+// Patrones:
+//   - Backtracking
+//
+// Útil cuando:
+//   - se generan strings con restricciones entre caracteres adyacentes
+//   - se busca el k-ésimo elemento en orden lexicográfico
+//   - se puede podar temprano cuando ya se encontró el resultado
+//
+// Complejidad:
+//   - Tiempo: O(n * 3 * 2^(n-1)) — 3 opciones iniciales, 2 en cada nivel siguiente
+//   - Espacio: O(n)
+func getHappyString(n int, k int) string {
+	happy := [3]byte{'a', 'b', 'c'}
+	count, res := 0, ""
+	current := make([]byte, 0, n)
+	var backtrack func()
+	backtrack = func() {
+		m := len(current)
+		if m == n {
+			count++
+			if count == k {
+				res = string(current)
+			}
+			return
+		}
+		for _, v := range happy {
+			if m > 0 && current[m-1] == v {
+				continue
+			}
+			current = append(current, v)
+			backtrack()
+			if res != "" {
+				return
+			}
+			current = current[:len(current)-1]
+		}
+	}
+	backtrack()
 	return res
 }
