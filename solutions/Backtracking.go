@@ -4,9 +4,7 @@
 
 package solutions
 
-import (
-	"strconv"
-)
+import "strconv"
 
 // Combinations
 //
