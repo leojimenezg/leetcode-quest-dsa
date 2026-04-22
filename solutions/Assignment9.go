@@ -44,3 +44,39 @@ func reorderList(head *ListNode) {
 	}
 	nodes[i].Next = nil
 }
+
+// All Paths From Source to Target
+//
+// Patrones:
+//   - BFS
+//   - Graph Traversal
+//
+// Útil cuando:
+//   - se buscan todos los caminos posibles en un DAG
+//   - se exploran rutas nivel por nivel
+//   - el grafo no tiene ciclos (DAG) por lo que no se necesita visited
+//
+// Complejidad:
+//   - Tiempo: O(2^n * n) — puede haber 2^n caminos de longitud n
+//   - Espacio: O(2^n * n) por el almacenamiento de todos los caminos
+func allPathsSourceTarget(graph [][]int) [][]int {
+	goalNode := len(graph) - 1
+	combinations := make([][]int, 0)
+	queue := Queue{}
+	queue.Push([]int{0})
+	for !queue.Empty() {
+		path := queue.Pop()
+		lastNode := path[len(path)-1]
+		if lastNode == goalNode {
+			combinations = append(combinations, path)
+		} else {
+			for i := range graph[lastNode] {
+				newPath := make([]int, len(path)+1)
+				copy(newPath, path)
+				newPath[len(newPath)-1] = graph[lastNode][i]
+				queue.Push(newPath)
+			}
+		}
+	}
+	return combinations
+}

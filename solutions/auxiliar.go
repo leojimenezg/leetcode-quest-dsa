@@ -173,3 +173,52 @@ type TreeNode struct {
 	Left  *TreeNode
 	Right *TreeNode
 }
+
+type Queue struct {
+	inStack  [][]int
+	outStack [][]int
+	size     int
+}
+
+func Constructor() Queue {
+	return Queue{}
+}
+
+func (this *Queue) Push(x []int) {
+	this.inStack = append(this.inStack, x)
+	this.size++
+}
+
+func (this *Queue) Pop() []int {
+	if this.size == 0 {
+		return []int{}
+	}
+	if len(this.outStack) == 0 {
+		this.lazyTransfer()
+	}
+	r := this.outStack[len(this.outStack)-1]
+	this.outStack = this.outStack[:len(this.outStack)-1]
+	this.size--
+	return r
+}
+
+func (this *Queue) Peek() []int {
+	if this.size == 0 {
+		return []int{}
+	}
+	if len(this.outStack) == 0 {
+		this.lazyTransfer()
+	}
+	return this.outStack[len(this.outStack)-1]
+}
+
+func (this *Queue) Empty() bool {
+	return this.size == 0
+}
+
+func (this *Queue) lazyTransfer() {
+	for len(this.inStack) > 0 {
+		this.outStack = append(this.outStack, this.inStack[len(this.inStack)-1])
+		this.inStack = this.inStack[:len(this.inStack)-1]
+	}
+}
